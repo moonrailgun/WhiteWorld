@@ -1,0 +1,32 @@
+#panel{
+    background: rgba(0,0,0,0.5);
+    margin-top: 15vw;
+    border-radius: 6px;
+    padding: 20px;
+    transition: all 0.1s ease;
+}
+#panel .loginBlock{
+    transition: all 0.1s ease;
+}
+
+#selectModel .btn,#selectServer .btn{
+    height:80px;
+    font-size: 36px;
+    text-shadow:  0 0 5px #3e3e3e;
+}
+#selectModel .btn-block+.btn-block,#selectServer .btn-block+.btn-block{
+    margin-top: 30px;
+}
+#login{
+    color: #ffffff;
+}
+#login label{
+    text-align: right;
+}
+#login button{
+    background-color: rgba(0,0,0,0);
+    border: solid 1px #b2b2b2;
+}
+#login .btn-block{
+    margin-bottom: 10px;
+}

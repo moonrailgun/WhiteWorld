@@ -9,9 +9,10 @@
     <meta http-equiv="content-style-type" content="text/css"/>
     <meta http-equiv="content-scripte-type" content="text/javascript"/>
     <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
-    <link type="text/css" rel="stylesheet" href="css/base.css"/>
-    <script src="js/lib/bootstrap.js"></script>
+    <!--<link type="text/css" rel="stylesheet" href="css/base.css"/>-->
+    <link type="text/css" rel="stylesheet" href="css/login.css"/>
     <script src="js/lib/socket.io.js"></script>
+    <script src="js/starry.night.js"></script>
     <script src="js/lib/pomeloclient.js"></script>
     <script type="text/javascript">
         var pomelo = window.pomelo;
@@ -29,26 +30,54 @@
             });
         }
     </script>
-
 </head>
 <body>
-<div class="g-doc">
-    <div class="g-banner" style="border:none">
-        <div class="logo">
-            <div class="img"></div>
-        </div>
+<canvas id="canvas" width="1087"
+        style="width:100vw !important;height:100vh !important;position:fixed !important;left:0;top:0"
+        height="804"></canvas>
+
+<div id="panel" class="loginBlock col-sm-8 col-sm-offset-2">
+    <div id="selectModel" class="col-sm-10 col-sm-offset-1" style="display: none;">
+        <button class="btn btn-lg btn-default btn-block">单人游戏</button>
+        <button class="btn btn-lg btn-default btn-block">多人游戏</button>
     </div>
-    <div class="g-background">
-        <div class="g-content">
-            Welcome to Pomelo
-        </div>
+    <div id="selectServer" class="loginBlock col-sm-10 col-sm-offset-1" style="display: none;">
+        <button class="btn btn-lg btn-default btn-block">本地服务器</button>
+        <button class="btn btn-lg btn-default btn-block">远程服务器</button>
     </div>
-    <div class="g-link">
-        Home:
-        <a href="https://github.com/NetEase/pomelo">https://github.com/NetEase/pomelo</a>
-    </div>
-    <div class="g-button">
-        <input id="test" type="button" value="Test Game Server" onclick="show()"/>
+    <div id="login" class="loginBlock">
+        <form>
+            <div class="form-group clearfix">
+                <label class="col-lg-2"></label>
+                <div class="col-lg-8"><h3>用户登录</h3></div>
+            </div>
+            <div class="form-group clearfix">
+                <label for="username" class="col-lg-2">用户名</label>
+                <div class="col-lg-8">
+                    <input id="username" name="username" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group clearfix">
+                <label for="password" class="col-lg-2">密码</label>
+                <div class="col-lg-8">
+                    <input id="password" name="password" class="form-control" type="password" required>
+                </div>
+            </div>
+            <div class="form-group clearfix">
+                <label for="password" class="col-lg-2 control-label"></label>
+                <div class="col-lg-8">
+                    <a href="#" style="font-weight:800">忘记密码了</a>
+                </div>
+            </div>
+            <div class="form-group clearfix">
+                <div class="col-lg-3 col-lg-offset-2">
+                    <button class='btn btn-lg btn-block' type='submit'>注册</button>
+                </div>
+                <div class="col-lg-5 col-lg-offset-0">
+                    <button class='btn btn-lg btn-block' type='submit'>登录</button>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 </body>
