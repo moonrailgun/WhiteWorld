@@ -5,8 +5,8 @@
     padding: 20px;
     transition: all 0.1s ease;
 }
-#panel .loginBlock{
-    transition: all 0.1s ease;
+#panel .loginBlock div{
+    transition: all 1s ease;
 }
 
 #selectModel .btn,#selectServer .btn{
