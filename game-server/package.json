@@ -1,9 +1,9 @@
 {
-    "name":"WhiteWorld",
-    "version":"0.0.1",
-    "private":false,
-    "dependencies":{
-        "pomelo":"1.2.0"
-    }
+  "name": "WhiteWorld",
+  "version": "0.0.1",
+  "private": false,
+  "dependencies": {
+    "crc": "^3.3.0",
+    "pomelo": "1.2.0"
+  }
 }
-

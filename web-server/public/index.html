@@ -11,9 +11,10 @@
     <link type="text/css" rel="stylesheet" href="css/login.css"/>
     <script src="js/lib/jquery-2.1.4.js"></script>
     <script src="js/lib/socket.io.js"></script>
+    <script src="js/lib/pomeloclient.js"></script>
     <script src="js/starry.night.js"></script>
     <script src="js/netHelper.js"></script>
-    <script src="js/lib/pomeloclient.js"></script>
+    <script src="js/login.js"></script>
     <script type="text/javascript">
         var pomelo = window.pomelo;
         var host = "127.0.0.1";
@@ -30,7 +31,7 @@
             });
         }
 
-        function SelectModel(index) {
+        function selectModel(index) {
             if (index == 0) {
                 alert('单人模式尚未完成。视为多人模式');
             }
@@ -39,7 +40,7 @@
             $('#login').hide();
         }
 
-        function SelectServer(index) {
+        function selectServer(index) {
             var ip = '127.0.0.1';
             if (index == 1) {
                 ip = prompt('请输入服务器IP:', '127.0.0.1');
@@ -66,8 +67,17 @@
                 }
             });
         }
-        $(document).ready(function () {
 
+        //todo
+        function login() {
+            var login = new Login({
+                ip: '127.0.0.1',
+                port: '3014'
+            });
+            login.entry('123');
+        }
+        $(document).ready(function () {
+            login();
         });
     </script>
 </head>
@@ -79,12 +89,12 @@
 
 <div id="panel" class="loginBlock col-sm-8 col-sm-offset-2">
     <div id="selectModel" class="col-sm-10 col-sm-offset-1">
-        <button class="btn btn-lg btn-default btn-block" onclick="SelectModel(0);">单人游戏</button>
-        <button class="btn btn-lg btn-default btn-block" onclick="SelectModel(1);">多人游戏</button>
+        <button class="btn btn-lg btn-default btn-block" onclick="selectModel(0);">单人游戏</button>
+        <button class="btn btn-lg btn-default btn-block" onclick="selectModel(1);">多人游戏</button>
     </div>
     <div id="selectServer" class="loginBlock col-sm-10 col-sm-offset-1" style="display: none;">
-        <button class="btn btn-lg btn-default btn-block" onclick="SelectServer(0);">本地服务器</button>
-        <button class="btn btn-lg btn-default btn-block" onclick="SelectServer(1);">远程服务器</button>
+        <button class="btn btn-lg btn-default btn-block" onclick="selectServer(0);">本地服务器</button>
+        <button class="btn btn-lg btn-default btn-block" onclick="selectServer(1);">远程服务器</button>
     </div>
     <div id="login" class="loginBlock" style="display: none;">
         <form>
@@ -116,7 +126,7 @@
             </div>
             <div class="form-group clearfix">
                 <div class="col-lg-3 col-lg-offset-2">
-                    <button class='btn btn-lg btn-block' type='submit'>注册</button>
+                    <button class='btn btn-lg btn-block'>注册</button>
                 </div>
                 <div class="col-lg-5 col-lg-offset-0">
                     <button class='btn btn-lg btn-block' type='submit'>登录</button>
