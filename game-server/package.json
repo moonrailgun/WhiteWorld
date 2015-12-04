@@ -4,6 +4,8 @@
   "private": false,
   "dependencies": {
     "crc": "^3.3.0",
-    "pomelo": "1.2.0"
+    "generic-pool": "^2.2.1",
+    "pomelo": "1.2.0",
+    "pomelo-sync-plugin": "0.0.2"
   }
 }

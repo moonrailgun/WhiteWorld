@@ -1,4 +1,5 @@
 var pomelo = require('pomelo');
+var sync = require('pomelo-sync-plugin');
 
 /**
  * Init app for client.
@@ -16,7 +17,7 @@ app.configure('production|development', 'area|auth|connector|master', function()
     var dbclient = require('./app/dao/mysql/mysql').init(app);
     app.set('dbclient', dbclient);
     // app.load(pomelo.sync, {path:__dirname + '/app/dao/mapping', dbclient: dbclient});
-    app.use(sync, {sync: {path:__dirname + '/app/dao/mapping', dbclient: dbclient}});
+    //app.use(sync, {sync: {path:__dirname + '/app/dao/mapping', dbclient: dbclient}});
 });
 
 // 应用配置
