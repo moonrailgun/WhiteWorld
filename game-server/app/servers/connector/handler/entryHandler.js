@@ -32,10 +32,10 @@ Handler.prototype.entry = function (msg, session, next) {
         return;
     }
     var uid, players, player;
-
     async.waterfall([
         function (callback) {
             self.app.rpc.auth.authRemote.auth(session, token, callback);
+            console.log('b');
         },
         function (code, user, callback) {
             // query player info by user id
@@ -51,9 +51,53 @@ Handler.prototype.entry = function (msg, session, next) {
 
             uid = user.id;
             userDao.getPlayersByUid(user.id, callback);
-        }//todo
-    ]);
+        }, function (res, cb) {
+            players = res;
+            self.app.get('sessionService').kick(uid, cb);//?
+        }, function (cb) {
+            session.bind(uid, cb);
+        }, function (cb) {
+            if (!players || players.length === 0) {
+                next(null, {code: Code.OK});
+                return;
+            }
 
+            player = players[0];
 
-    next(null, {code: 200, msg: 'game server is ok.'});
+            session.set('serverId', self.app.get('areaIdMap')[player.areaId]);
+            session.set('playername', player.name);
+            session.set('playerId', player.id);
+            session.on('closed', onUserLeave.bind(null, self.app));
+            session.pushAll(cb);
+        }, function (cb) {
+            /*self.app.rpc.chat.chatRemote.add(session, player.userId, player.name,
+             channelUtil.getGlobalChannelName(), cb);*/
+        }
+    ], function (err) {
+        if (err) {
+            next(err, {code: Code.FAIL});
+            return;
+        }
+
+        next(null, {code: Code.OK, player: players ? players[0] : null});
+    });
+
+    //next(null, {code: 200, msg: 'game server is ok.'});
+};
+
+var onUserLeave = function (app, session, reason) {
+    if (!session || !session.uid) {
+        return;
+    }
+
+    utils.myPrint('1 ~ OnUserLeave is running ...');
+    app.rpc.area.playerRemote.playerLeave(session, {
+        playerId: session.get('playerId'),
+        instanceId: session.get('instanceId')
+    }, function (err) {
+        if (!!err) {
+            logger.error('user leave error! %j', err);
+        }
+    });
+    app.rpc.chat.chatRemote.kick(session, session.uid, null);
 };

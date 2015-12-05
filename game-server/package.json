@@ -5,6 +5,7 @@
   "dependencies": {
     "crc": "^3.3.0",
     "generic-pool": "^2.2.1",
+    "mysql": "^2.9.0",
     "pomelo": "1.2.0",
     "pomelo-sync-plugin": "0.0.2"
   }

@@ -12,6 +12,12 @@ app.configure('production|development', function() {
     app.loadConfig('mysql', app.getBase() + '/../shared/config/mysql.json');
 });
 
+// 认证服务器配置
+app.configure('production|development', 'auth', function() {
+    // 读取配置文件
+    app.set('session', require('./config/session.json'));
+});
+
 // 数据库配置
 app.configure('production|development', 'area|auth|connector|master', function() {
     var dbclient = require('./app/dao/mysql/mysql').init(app);
