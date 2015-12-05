@@ -35,15 +35,13 @@ Handler.prototype.entry = function (msg, session, next) {
     async.waterfall([
         function (callback) {
             self.app.rpc.auth.authRemote.auth(session, token, callback);
-            console.log('b');
         },
         function (code, user, callback) {
-            // query player info by user id
+            // 根据id查询用户信息
             if (code !== Code.OK) {
                 next(null, {code: code});
                 return;
             }
-
             if (!user) {
                 next(null, {code: Code.ENTRY.FA_USER_NOT_EXIST});
                 return;
@@ -52,8 +50,9 @@ Handler.prototype.entry = function (msg, session, next) {
             uid = user.id;
             userDao.getPlayersByUid(user.id, callback);
         }, function (res, cb) {
+            //踢出已经在游戏的
             players = res;
-            self.app.get('sessionService').kick(uid, cb);//?
+            self.app.get('sessionService').kick(uid, cb);
         }, function (cb) {
             session.bind(uid, cb);
         }, function (cb) {
@@ -62,17 +61,17 @@ Handler.prototype.entry = function (msg, session, next) {
                 return;
             }
 
-            player = players[0];
+            player = players[0];//之后可能会有多人物选择
 
-            session.set('serverId', self.app.get('areaIdMap')[player.areaId]);
+            //session.set('serverId', self.app.get('areaIdMap')[player.areaId]);//暂时注释
             session.set('playername', player.name);
             session.set('playerId', player.id);
             session.on('closed', onUserLeave.bind(null, self.app));
             session.pushAll(cb);
-        }, function (cb) {
-            /*self.app.rpc.chat.chatRemote.add(session, player.userId, player.name,
-             channelUtil.getGlobalChannelName(), cb);*/
-        }
+        }/*, function (cb) {
+            //self.app.rpc.chat.chatRemote.add(session, player.userId, player.name,
+             //channelUtil.getGlobalChannelName(), cb);
+        }*/
     ], function (err) {
         if (err) {
             next(err, {code: Code.FAIL});

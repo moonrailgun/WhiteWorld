@@ -1,5 +1,6 @@
 var express = require('express');
 var mysql = require('./lib/dao/mysql/mysql');
+var secret = require('../shared/config/session').secret;
 var userDao = require('./lib/dao/userDao');
 var Token = require('../shared/token');
 var app = express();

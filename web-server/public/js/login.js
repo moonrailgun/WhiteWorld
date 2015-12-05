@@ -5,6 +5,7 @@
 var Login = function (serverOption) {
     var host = serverOption.ip;
     var port = serverOption.port ? serverOption.port : 3001;
+    var loading = false;
 
     var httpHost = location.href.replace(location.hash, '');
 
@@ -17,15 +18,15 @@ var Login = function (serverOption) {
         loading = false;
     });
 
-    this.login = function (){
+    this.login = function (username, pwd){
         if (loading) {
             return;
         }
         loading = true;
-        var username = $('#loginUser').val().trim();
-        var $loginPwd = $('#loginPwd');
-        var pwd = $loginPwd.val().trim();
-        $loginPwd.val('');
+        //var username = $('#loginUser').val().trim();
+        //var $loginPwd = $('#loginPwd');
+        //var pwd = $loginPwd.val().trim();
+        //$loginPwd.val('');
         if (!username) {
             alert("Username is required!");
             loading = false;
@@ -58,19 +59,19 @@ var Login = function (serverOption) {
     };
 
     //todo
-    this.entry = function (name, callback) {
-        pomelo.init({
-            host: host,
-            port: port,
-            log: true
-        }, function () {
-            pomelo.request("gate.gateHandler.queryEntry", {uid: 1}, function (data) {
-                alert(JSON.stringify(data));
-                pomelo.disconnect();
-                //todo
-            });
-        })
-    };
+    //this.entry = function (name, callback) {
+    //    pomelo.init({
+    //        host: host,
+    //        port: port,
+    //        log: true
+    //    }, function () {
+    //        pomelo.request("gate.gateHandler.queryEntry", {uid: 1}, function (data) {
+    //            alert(JSON.stringify(data));
+    //            pomelo.disconnect();
+    //            //todo
+    //        });
+    //    })
+    //};
 
     var authEntry = function(uid, token, callback){
         queryEntry(uid, function(host, port) {
@@ -108,11 +109,9 @@ var Login = function (serverOption) {
             port:port,
             log:true
         },function(){
-            pomelo.request('connector.entryHandler.entry'),{token:token},function(data){
-
-            }
+            pomelo.request('connector.entryHandler.entry',{token:token},function(data){
+                console.log(data);
+            });
         })
     }
 };
-
-var login = new Login();

@@ -30,7 +30,6 @@ Remote.prototype.auth = function(token, cb){
         cb(null, Code.ENTRY.FA_TOKEN_EXPIRE);
         return;
     }
-
     userDao.getUserById(res.uid, function(err, user) {
         if(err) {
             cb(err);

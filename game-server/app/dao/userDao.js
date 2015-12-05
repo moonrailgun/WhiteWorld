@@ -1,12 +1,14 @@
 var logger = require('pomelo-logger').getLogger(__filename);
 var pomelo = require('pomelo');
 var utils = require('../util/utils');
+var User = require('../domain/user');
 
 var userDao = module.exports;
 
+//获取该用户uid下所有人物
 userDao.getPlayersByUid = function(uid, callback) {
     console.log(utils);
-    var sql = 'select * from Player where userId = ?';
+    var sql = 'select * from player where userId = ?';
     var args = [uid];
 
     pomelo.app.get('dbclient').query(sql,args,function(err, res) {
@@ -24,7 +26,7 @@ userDao.getPlayersByUid = function(uid, callback) {
 };
 
 userDao.getUserById = function (uid, cb){
-    var sql = 'select * from	User where id = ?';
+    var sql = 'select * from	account where id = ?';
     var args = [uid];
     pomelo.app.get('dbclient').query(sql,args,function(err, res){
         if(err !== null){
