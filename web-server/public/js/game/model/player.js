@@ -2,7 +2,7 @@
  * Created by Chen on 2015-12-10.
  */
 
-var Player = function(){
+var Player = function () {
     var player = this;
 
     player.uid = -1;//用户唯一标识
@@ -24,28 +24,41 @@ var Player = function(){
 
     player.messages = [];//信息框
 
-    player.update = function(){
+    player.update = function () {
 
     };
 
-    player.draw = function(context){
+    player.draw = function (context) {
+        context.fillStyle = 'rgba(0,0,0,1)';
+        context.shadowOffsetX = 0;
+        context.shadowOffsetY = 0;
+        context.shadowBlur = 6;
+        context.shadowColor = 'rgba(0, 0, 0, 0.7)';
 
+        // 画圆
+        context.beginPath();
+        context.arc(player.x, player.y, 4, 0, 2 * Math.PI);
+        context.fill();
+
+        // 清除画笔修改
+        context.shadowBlur = 0;
+        context.shadowColor = '';
     };
 
     //绘制名字
-    var drawName = function(context) {
-        context.fillStyle = 'rgba(226,219,226,'+opacity+')';
+    var drawName = function (context) {
+        context.fillStyle = 'rgba(226,219,226,' + opacity + ')';
         context.font = 7 + "px 'proxima-nova-1','proxima-nova-2', arial, sans-serif";
         context.textBaseline = 'hanging';
         var width = context.measureText(player.name).width;
-        context.fillText(player.name, player.x - width/2, player.y + 8);
+        context.fillText(player.name, player.x - width / 2, player.y + 8);
     };
 
     //绘制信息
-    var drawMessages = function(context) {
+    var drawMessages = function (context) {
         player.messages.reverse();
-        for(var i = 0, len = tadpole.messages.length; i<len; i++) {
-            player.messages[i].draw(context, tadpole.x+10, tadpole.y+5, i);
+        for (var i = 0, len = tadpole.messages.length; i < len; i++) {
+            player.messages[i].draw(context, tadpole.x + 10, tadpole.y + 5, i);
         }
         player.messages.reverse();
     };

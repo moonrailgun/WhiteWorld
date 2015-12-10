@@ -1,0 +1,117 @@
+html {
+    -webkit-user-select: none;
+    cursor: default;
+}
+
+body {
+    font-family: "Microsoft YaHei", "proxima-nova-1", "proxima-nova-2", arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-size: 62.5%;
+}
+
+#fps {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+
+#cant-connect {
+    display: none;
+    position: absolute;
+    top: 150px;
+    left: 10px;
+    padding: 10px 20px;
+    color: rgba(249, 136, 119, 0.9);
+    width: 500px;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+#cant-connect a:link {
+    color: #c0fdf7;
+    text-decoration: underline;
+}
+
+#unsupported-browser {
+    display: none;
+    position: absolute;
+    z-index: 2;
+    background-color: #fff;
+    background-image: linear-gradient(top, #fff, #e2e2e2);
+    background-image: -o-linear-gradient(top, #fff, #e2e2e2);
+    background-image: -moz-linear-gradient(top, #fff, #e2e2e2);
+    background-image: -ms-linear-gradient(top, #fff, #e2e2e2);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fff), color-stop(1, #e2e2e2));
+    border-radius: 10px;
+    box-shadow: 1px 1px 5px #000;
+    top: 50%;
+    left: 50%;
+    width: 420px;
+    margin: -200px;
+    padding: 35px;
+    font-size: 1.5em;
+    border: 1px solid #fff;
+}
+#unsupported-browser p {
+    color: #000;
+    text-shadow: white 1px 1px 0;
+    line-height: 1.4em;
+}
+#force-init-button {
+    font-size: .6em;
+    color: #e47c6c;
+    text-align: center;
+    font-weight: bold;
+    text-decoration: underline;
+}
+#force-init-button:hover {
+    color: #999;
+}
+#unsupported-browser ul li  {
+    display: inline;
+    list-style-type: none;
+    padding-right: 10px;
+    font-weight: bold;
+    padding: 4px 10px 4px 10px;
+    background-color: #606061;
+    border-radius: 100px;
+    box-shadow:inset -1px -1px -5px #000;
+    text-shadow: none;
+    font-size: .8em;
+}
+#unsupported-browser ul   {
+    margin: 20px 0px 20px 0px;
+}
+
+#chatText
+{
+    display:inline-block;
+}
+#chatText,#chat
+{
+    font-size:3em;
+    font-weight: bold;
+    max-width: 70%;
+}
+#chat {
+    display: block;
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    padding: 10px 20px;
+    background: rgba(255,255,255,.1);
+    border-radius: 20px;
+    color: #fff;
+    text-align: center;
+    border-style:none;
+    outline-style:none;
+    height:30px;
+    opacity:0;
+    transition: opacity .2s linear;
+    -o-transition: opacity .2s linear;
+    -moz-transition: opacity .2s linear;
+    -webkit-transition: opacity .2s linear;
+    -ms-transition: opacity .2s linear;
+}

@@ -3,16 +3,45 @@
 <head lang="en">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <script src="js/lib/jquery-2.1.4.js"></script>
-    <script src="js/lib/socket.io.js"></script>
-    <script src="js/lib/pomeloclient.js"></script>
-    <script src="js/game/model/keys.js"></script>
-    <script src="js/game/model/player.js"></script>
-    <script src="js/game/model/app.js"></script>
-    <script src="js/game/main.js"></script>
+    <link type="text/css" rel="stylesheet" href="./css/common.css"/>
+    <link type="text/css" rel="stylesheet" href="./css/main.css"/>
     <title>WhiteWorld</title>
 </head>
 <body>
 <canvas id="game-scene"></canvas>
+<div id="cant-connect">
+    与服务器断开连接了。您可以重新刷新页面。
+</div>
+<div id="ui">
+    <div id="fps"></div>
+    <input id="chat" type="text"/>
+    <div id="chatText"></div>
+    <div id="unsupported-browser">
+        <p>
+            您的浏览器不支持 <a rel="external" href="http://en.wikipedia.org/wiki/WebSocket">WebSockets</a>.
+            推荐您使用以下浏览器
+        </p>
+        <ul>
+            <li><a rel="external" href="http://www.google.com/chrome">Google Chrome</a></li>
+            <li><a rel="external" href="http://apple.com/safari">Safari 4</a></li>
+            <li><a rel="external" href="http://www.mozilla.com/firefox/">Firefox 4</a></li>
+            <li><a rel="external" href="http://www.opera.com/">Opera 11</a></li>
+        </ul>
+        <p>
+            <a href="#" id="force-init-button" onclick="forceInit();">仍然浏览!</a>
+        </p>
+    </div>
+</div>
 </body>
+<script src="js/lib/jquery-2.1.4.js"></script>
+<script src="js/lib/socket.io.js"></script>
+<script src="js/lib/pomeloclient.js"></script>
+<script src="js/lib/modernizr-1.5.min.js"></script>
+<script src="js/lib/Stats.js"></script>
+<script src="js/game/model/keycode.js"></script>
+<script src="js/game/model/settings.js"></script>
+<script src="js/game/model/camera.js"></script>
+<script src="js/game/model/player.js"></script>
+<script src="js/game/model/app.js"></script>
+<script src="js/game/main.js"></script>
 </html>
