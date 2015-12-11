@@ -15,15 +15,18 @@ var App = function (aSettings, aCanvas) {
     app.settings = new Settings();//配置文件
 
     app.update = function () {
-        if(keyNav.x != 0 || keyNav.y != 0){
+        if (keyNav.x != 0 || keyNav.y != 0) {
             app.userplayer.userUpdate(app.allPlayerList, app.userplayer.x + keyNav.x, app.userplayer.y + keyNav.y);
-        }else{
+        } else {
             app.userplayer.userUpdate(app.allPlayerList, app.userplayer.x + keyNav.x, app.userplayer.y + keyNav.y);
         }
 
         app.camera.update(app.userplayer);
-
         app.userplayer.update();
+
+        if (debug) {
+            updateUserPosition();
+        }
     };
     app.draw = function () {
         app.camera.setupContext();
@@ -96,6 +99,14 @@ var App = function (aSettings, aCanvas) {
     var resizeCanvas = function () {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
+    };
+
+    var $userPosition = $('#position');
+    var updateUserPosition = function () {
+        var x = app.userplayer.x.toFixed(2);
+        var y = app.userplayer.y.toFixed(2);
+
+        $userPosition.text('(' + x + ',' + y + ')');
     };
 
     (function () {
