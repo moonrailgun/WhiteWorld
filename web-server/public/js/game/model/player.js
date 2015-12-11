@@ -24,8 +24,43 @@ var Player = function () {
 
     player.messages = [];//信息框
 
-    player.update = function () {
+    //本机玩家更新
+    player.userUpdate = function(allPlayerList, angleTargetX, angleTargetY){
+        var prevState = {
+            angle: player.angle,
+            momentum: player.momentum
+        };//上一个状态
 
+        var anglediff = ((Math.atan2(angleTargetY - player.y, angleTargetX - player.x)) - player.angle);
+        while(anglediff < -Math.PI) {
+            anglediff += Math.PI * 2;
+        }
+        while(anglediff > Math.PI) {
+            anglediff -= Math.PI * 2;
+        }
+
+        player.angle += anglediff / 5;
+
+        // Momentum to targetmomentum
+        if(player.targetMomentum != player.momentum) {
+            player.momentum += (player.targetMomentum - player.momentum) / 20;
+        }
+        if(player.momentum < 0) {
+            player.momentum = 0;
+        }
+        if(player.momentum > player.maxMomentum){
+            player.momentum = player.maxMomentum;
+        }
+    };
+
+    player.update = function (mouse) {
+        player.x += Math.cos(player.angle) * player.momentum;
+        player.y += Math.sin(player.angle) * player.momentum;
+
+        if(player.targetX != 0 || player.targetY != 0) {
+            player.x += (player.targetX - player.x) / 20;
+            player.y += (player.targetY - player.y) / 20;
+        }
     };
 
     player.draw = function (context) {

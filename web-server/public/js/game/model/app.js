@@ -11,10 +11,19 @@ var App = function (aSettings, aCanvas) {
 
     app.camera = null;
     app.userplayer = null;//玩家自身对象
+    app.allPlayerList = [];//所有玩家列表
     app.settings = new Settings();//配置文件
 
     app.update = function () {
+        if(keyNav.x != 0 || keyNav.y != 0){
+            app.userplayer.userUpdate(app.allPlayerList, app.userplayer.x + keyNav.x, app.userplayer.y + keyNav.y);
+        }else{
+            app.userplayer.userUpdate(app.allPlayerList, app.userplayer.x + keyNav.x, app.userplayer.y + keyNav.y);
+        }
+
         app.camera.update(app.userplayer);
+
+        app.userplayer.update();
     };
     app.draw = function () {
         app.camera.setupContext();

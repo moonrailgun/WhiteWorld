@@ -27,8 +27,7 @@ var initApp = function () {
     document.addEventListener('keydown', app.keydown, false);
     document.addEventListener('keyup', app.keyup, false);
 
-    //setInterval(runLoop,30);//开始执行
-    runLoop();
+    setInterval(runLoop,30);//开始执行
 };
 
 //强制初始化
