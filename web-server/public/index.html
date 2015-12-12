@@ -8,81 +8,12 @@
     <meta http-equiv="content-style-type" content="text/css"/>
     <meta http-equiv="content-scripte-type" content="text/javascript"/>
     <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="css/tips.css"/>
     <link type="text/css" rel="stylesheet" href="css/login.css"/>
-    <script src="js/lib/jquery-2.1.4.js"></script>
-    <script src="js/lib/socket.io.js"></script>
-    <script src="js/lib/pomeloclient.js"></script>
-    <script src="js/starry.night.js"></script>
-    <script src="js/netHelper.js"></script>
-    <script src="js/login.js"></script>
-    <script type="text/javascript">
-        var pomelo = window.pomelo;
-        var host = "127.0.0.1";
-        var port = "3010";
-        function show() {
-            pomelo.init({
-                host: host,
-                port: port,
-                log: true
-            }, function () {
-                pomelo.request("connector.entryHandler.entry", "hello pomelo", function (data) {
-                    alert(data.msg);
-                });
-            });
-        }
-
-        function selectModel(index) {
-            if (index == 0) {
-                alert('单人模式尚未完成。视为多人模式');
-            }
-            $('#selectModel').hide();
-            $('#selectServer').show();
-            $('#login').hide();
-        }
-
-        function selectServer(index) {
-            var ip = '127.0.0.1';
-            if (index == 1) {
-                ip = prompt('请输入服务器IP:', '127.0.0.1');
-                if (!ip) {
-                    return;
-                }
-            }
-
-            $.ping({
-                url: ip + ':3001',
-                afterPing: function (ping) {
-                    var addon = '';
-                    if (ping < 100) {
-                        addon = '网络良好';
-                    } else if (ping < 500) {
-                        addon = '网络状况一般';
-                    } else {
-                        addon = '网络状况很差，不建议进行游戏';
-                    }
-                    alert(ip + ':' + ping + 'ms,' + addon);
-                    $('#selectModel').hide();
-                    $('#selectServer').hide();
-                    $('#login').show();
-                }
-            });
-        }
-
-        //todo
-        function login() {
-            var login = new Login({
-                ip: '127.0.0.1',
-                port: '3014'
-            });
-            login.login('admin','admin');
-        }
-        $(document).ready(function () {
-            login();
-        });
-    </script>
 </head>
 <body>
 <div id="msg"></div>
+<div id="tips"></div>
 <canvas id="canvas" width="1087"
         style="width:100vw !important;height:100vh !important;position:fixed !important;left:0;top:0"
         height="804"></canvas>
@@ -136,4 +67,76 @@
     </div>
 </div>
 </body>
+<script src="js/lib/jquery-2.1.4.js"></script>
+<script src="js/lib/socket.io.js"></script>
+<script src="js/lib/pomeloclient.js"></script>
+<script src="js/starry.night.js"></script>
+<script src="js/netHelper.js"></script>
+<script src="js/tips.js"></script>
+<script src="js/login.js"></script>
+<script type="text/javascript">
+    var pomelo = window.pomelo;
+    var host = "127.0.0.1";
+    var port = "3010";
+    function show() {
+        pomelo.init({
+            host: host,
+            port: port,
+            log: true
+        }, function () {
+            pomelo.request("connector.entryHandler.entry", "hello pomelo", function (data) {
+                alert(data.msg);
+            });
+        });
+    }
+
+    function selectModel(index) {
+        if (index == 0) {
+            alert('单人模式尚未完成。视为多人模式');
+        }
+        $('#selectModel').hide();
+        $('#selectServer').show();
+        $('#login').hide();
+    }
+
+    function selectServer(index) {
+        var ip = '127.0.0.1';
+        if (index == 1) {
+            ip = prompt('请输入服务器IP:', '127.0.0.1');
+            if (!ip) {
+                return;
+            }
+        }
+
+        $.ping({
+            url: ip + ':3001',
+            afterPing: function (ping) {
+                var addon = '';
+                if (ping < 100) {
+                    addon = '网络良好';
+                } else if (ping < 500) {
+                    addon = '网络状况一般';
+                } else {
+                    addon = '网络状况很差，不建议进行游戏';
+                }
+                alert(ip + ':' + ping + 'ms,' + addon);
+                $('#selectModel').hide();
+                $('#selectServer').hide();
+                $('#login').show();
+            }
+        });
+    }
+
+    //todo
+    function login() {
+        var login = new Login({
+            ip: '127.0.0.1',
+            port: '3014'
+        });
+        login.login('admin','admin');
+    }
+    $(document).ready(function () {
+        //login();
+    });
+</script>
 </html>
