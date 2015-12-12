@@ -13,6 +13,7 @@ var App = function (aSettings, aCanvas) {
     app.userplayer = null;//玩家自身对象
     app.allPlayerList = [];//所有玩家列表
     app.settings = new Settings();//配置文件
+    app.debugInfo = new DebugInfo(mouse);
 
     app.update = function () {
         if (keyNav.x != 0 || keyNav.y != 0) {
@@ -24,8 +25,10 @@ var App = function (aSettings, aCanvas) {
         app.camera.update(app.userplayer);
         app.userplayer.update();
 
-        if (debug) {
-            updateUserPosition();
+        updateUserPosition();//更新坐标显示
+
+        if(debug){
+            app.debugInfo.update();
         }
     };
     app.draw = function () {
@@ -92,8 +95,44 @@ var App = function (aSettings, aCanvas) {
         }
     };
 
+    app.touchstart = function (e) {
+        e.preventDefault();
+        mouse.clicking = true;
+
+        if (app.userplayer) {
+            app.userplayer.momentum = app.userplayer.targetMomentum = app.userplayer.maxMomentum;
+        }
+
+        var touch = e.changedTouches.item(0);
+        if (touch) {
+            mouse.x = touch.clientX;
+            mouse.y = touch.clientY;
+        }
+    };
+    app.touchend = function (e) {
+        if (app.userplayer) {
+            app.userplayer.targetMomentum = 0;
+        }
+    };
+    app.touchmove = function (e) {
+        e.preventDefault();
+
+        var touch = e.changedTouches.item(0);
+        if (touch) {
+            mouse.x = touch.clientX;
+            mouse.y = touch.clientY;
+        }
+    };
+
     app.resize = function (e) {
         resizeCanvas();
+    };
+
+    var getMouseWorldPosition = function () {
+        return {
+            x: (mouse.x + (model.camera.x * model.camera.zoom - canvas.width / 2)) / model.camera.zoom,
+            y: (mouse.y + (model.camera.y * model.camera.zoom - canvas.height / 2)) / model.camera.zoom
+        }
     };
 
     var resizeCanvas = function () {

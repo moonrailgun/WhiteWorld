@@ -24,6 +24,12 @@ body {
     z-index: 2;
     font-size: 18px;
 }
+#debugInfo {
+    position: absolute;
+    top:24px;
+    right: 0;
+    z-index: 2;
+}
 
 #cant-connect {
     display: none;
