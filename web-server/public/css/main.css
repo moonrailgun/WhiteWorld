@@ -23,6 +23,7 @@ body {
     right: 0;
     z-index: 2;
     font-size: 18px;
+    text-align: right;
 }
 #debugInfo {
     position: absolute;

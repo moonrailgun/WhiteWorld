@@ -16,10 +16,13 @@ var App = function (aSettings, aCanvas) {
     app.debugInfo = new DebugInfo(mouse);
 
     app.update = function () {
-        if (keyNav.x != 0 || keyNav.y != 0) {
+        if (keyNav.x != 0 || keyNav.y != 0) {//键盘控制
             app.userplayer.userUpdate(app.allPlayerList, app.userplayer.x + keyNav.x, app.userplayer.y + keyNav.y);
-        } else {
-            app.userplayer.userUpdate(app.allPlayerList, app.userplayer.x + keyNav.x, app.userplayer.y + keyNav.y);
+        } else {//鼠标|触摸控制
+            var mvp = getMouseWorldPosition();
+            mouse.worldx = mvp.x;
+            mouse.worldy = mvp.y;
+            app.userplayer.userUpdate(app.allPlayerList, mouse.worldx, mouse.worldy);
         }
 
         app.camera.update(app.userplayer);
@@ -130,8 +133,8 @@ var App = function (aSettings, aCanvas) {
 
     var getMouseWorldPosition = function () {
         return {
-            x: (mouse.x + (model.camera.x * model.camera.zoom - canvas.width / 2)) / model.camera.zoom,
-            y: (mouse.y + (model.camera.y * model.camera.zoom - canvas.height / 2)) / model.camera.zoom
+            x: (mouse.x + (app.camera.x * app.camera.zoom - canvas.width / 2)) / app.camera.zoom,
+            y: (mouse.y + (app.camera.y * app.camera.zoom - canvas.height / 2)) / app.camera.zoom
         }
     };
 
