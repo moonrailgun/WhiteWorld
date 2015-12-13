@@ -23,7 +23,7 @@
 #login label{
     text-align: right;
 }
-#login button{
+#login input[type=button]{
     background-color: rgba(0,0,0,0);
     border: solid 1px #b2b2b2;
 }

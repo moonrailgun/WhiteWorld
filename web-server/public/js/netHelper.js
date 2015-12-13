@@ -27,13 +27,14 @@ $.ping = function (option) {
             if (option.beforePing) option.beforePing();
             requestTime = new Date().getTime();
         },
-        success: function(){
-            responseTime = new Date().getTime();
-            ping = Math.abs(requestTime - responseTime);
-            if (option.afterPing) option.afterPing(null,ping);
-        },
-        error: function(obj, msg){
-            if (option.afterPing) option.afterPing(obj,null);
+        complete: function (XHR, TS) {
+            if (XHR.status == 404 || XHR.status == 200) {
+                responseTime = new Date().getTime();
+                ping = Math.abs(requestTime - responseTime);
+                if (option.afterPing) option.afterPing(null, ping);
+            } else {
+                if (option.afterPing) option.afterPing(XHR.responseText, null);
+            }
         }
     });
 

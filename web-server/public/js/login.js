@@ -23,21 +23,6 @@ var Login = function (serverOption) {
             return;
         }
         loading = true;
-        //var username = $('#loginUser').val().trim();
-        //var $loginPwd = $('#loginPwd');
-        //var pwd = $loginPwd.val().trim();
-        //$loginPwd.val('');
-        if (!username) {
-            alert("Username is required!");
-            loading = false;
-            return;
-        }
-
-        if (!pwd) {
-            alert("Password is required!");
-            loading = false;
-            return;
-        }
 
         $.post(httpHost + 'login', {username: username, password: pwd}, function(data) {
             if (data.code === 501) {
@@ -51,27 +36,20 @@ var Login = function (serverOption) {
                 return;
             }
 
-            authEntry(data.uid, data.token, function() {
+            authEntry(data.uid, data.token, function(host,port,player,token) {
                 loading = false;
+                localStorage.setItem('username', username);
+                localStorage.setItem('token',token);
+                //切换场景
+                var info = {
+                    host: host,
+                    port: port,
+                    player: player
+                };
+                localStorage.setItem('serverInfo', JSON.stringify(info));
             });
-            localStorage.setItem('username', username);
         });
     };
-
-    //todo
-    //this.entry = function (name, callback) {
-    //    pomelo.init({
-    //        host: host,
-    //        port: port,
-    //        log: true
-    //    }, function () {
-    //        pomelo.request("gate.gateHandler.queryEntry", {uid: 1}, function (data) {
-    //            alert(JSON.stringify(data));
-    //            pomelo.disconnect();
-    //            //todo
-    //        });
-    //    })
-    //};
 
     var authEntry = function(uid, token, callback){
         queryEntry(uid, function(host, port) {
@@ -99,6 +77,7 @@ var Login = function (serverOption) {
         })
     };
 
+    //进入游戏
     var entry = function(host,port,token,callback){
         if(host === '127.0.0.1') {
             host = config.GATE_HOST;//转义为本地
@@ -110,7 +89,8 @@ var Login = function (serverOption) {
             log:true
         },function(){
             pomelo.request('connector.entryHandler.entry',{token:token},function(data){
-                console.log(data);
+                var player = data.player;
+                callback(host,port,player,token);
             });
         })
     }

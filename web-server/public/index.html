@@ -35,14 +35,14 @@
                 <div class="col-lg-8"><h3>用户登录</h3></div>
             </div>
             <div class="form-group clearfix">
-                <label id="loginUser" for="username" class="col-lg-2">用户名</label>
+                <label for="username" class="col-lg-2">用户名</label>
 
                 <div class="col-lg-8">
                     <input id="username" name="username" class="form-control" type="text" required>
                 </div>
             </div>
             <div class="form-group clearfix">
-                <label id="loginPwd" for="password" class="col-lg-2">密码</label>
+                <label for="password" class="col-lg-2">密码</label>
 
                 <div class="col-lg-8">
                     <input id="password" name="password" class="form-control" type="password" required>
@@ -57,10 +57,10 @@
             </div>
             <div class="form-group clearfix">
                 <div class="col-lg-3 col-lg-offset-2">
-                    <button class='btn btn-lg btn-block'>注册</button>
+                    <input type="button" class="btn btn-lg btn-block" onclick="return false;" value="注册">
                 </div>
                 <div class="col-lg-5 col-lg-offset-0">
-                    <button class='btn btn-lg btn-block' type='submit'>登录</button>
+                    <input type="button" class="btn btn-lg btn-block" onclick="login();" value="登录">
                 </div>
             </div>
         </form>
@@ -78,18 +78,6 @@
     var pomelo = window.pomelo;
     var host = "127.0.0.1";
     var port = "3014";
-    function show() {
-        pomelo.init({
-            host: host,
-            port: port,
-            log: true
-        }, function () {
-            pomelo.request("connector.entryHandler.entry", "hello pomelo", function (data) {
-                alert(data.msg);
-            });
-        });
-    }
-
     function selectModel(index) {
         if (index == 0) {
             tips.add(new Tip('单人模式尚未完成。视为多人模式'));
@@ -126,7 +114,7 @@
                     str = ip + ':' + ping + 'ms,' + addon;
                     tips.add(new Tip(str));
                 }else{
-                    str = '无法连接到服务器，请尝试重新检查网络后再试<br/>' + JSON.stringify(error);
+                    str = '无法连接到服务器，建议重新检查网络后再试<br/>' + JSON.stringify(error);
                     tips.add(new Tip(str));
                 }
                 $('#selectModel').hide();
@@ -136,16 +124,25 @@
         });
     }
 
-    //todo
     function login() {
+        var username = $('#username').val().trim();
+        var password = $('#password').val();
+        console.log(username);
+        if (!username && username.length < 6) {
+            tips.add(new Tip("用户名不合法"));
+            return;
+        }
+        if (!password && password.length < 6) {
+            tips.add(new Tip("密码不合法"));
+            return;
+        }
+
+
         var login = new Login({
             ip: '127.0.0.1',
             port: '3014'
         });
-        login.login('admin','admin');
+        login.login(username,password);
     }
-    $(document).ready(function () {
-        //login();
-    });
 </script>
 </html>
