@@ -77,7 +77,7 @@
 <script type="text/javascript">
     var pomelo = window.pomelo;
     var host = "127.0.0.1";
-    var port = "3010";
+    var port = "3014";
     function show() {
         pomelo.init({
             host: host,
@@ -92,7 +92,7 @@
 
     function selectModel(index) {
         if (index == 0) {
-            alert('单人模式尚未完成。视为多人模式');
+            tips.add(new Tip('单人模式尚未完成。视为多人模式'));
         }
         $('#selectModel').hide();
         $('#selectServer').show();
@@ -105,21 +105,30 @@
             ip = prompt('请输入服务器IP:', '127.0.0.1');
             if (!ip) {
                 return;
+            }else{
+                host = ip;
             }
         }
 
         $.ping({
             url: ip + ':3001',
-            afterPing: function (ping) {
-                var addon = '';
-                if (ping < 100) {
-                    addon = '网络良好';
-                } else if (ping < 500) {
-                    addon = '网络状况一般';
-                } else {
-                    addon = '网络状况很差，不建议进行游戏';
+            afterPing: function (error,ping) {
+                var str = '';
+                if(!error){
+                    var addon = '';
+                    if (ping < 100) {
+                        addon = '网络良好';
+                    } else if (ping < 500) {
+                        addon = '网络状况一般';
+                    } else {
+                        addon = '网络状况很差，不建议进行游戏';
+                    }
+                    str = ip + ':' + ping + 'ms,' + addon;
+                    tips.add(new Tip(str));
+                }else{
+                    str = '无法连接到服务器，请尝试重新检查网络后再试<br/>' + JSON.stringify(error);
+                    tips.add(new Tip(str));
                 }
-                alert(ip + ':' + ping + 'ms,' + addon);
                 $('#selectModel').hide();
                 $('#selectServer').hide();
                 $('#login').show();
