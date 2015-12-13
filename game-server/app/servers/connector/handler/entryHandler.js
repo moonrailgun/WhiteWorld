@@ -64,7 +64,7 @@ Handler.prototype.entry = function (msg, session, next) {
             player = players[0];//之后可能会有多人物选择
 
             //session.set('serverId', self.app.get('areaIdMap')[player.areaId]);//暂时注释
-            session.set('playername', player.name);
+            session.set('playername', player.username);
             session.set('playerId', player.id);
             session.on('closed', onUserLeave.bind(null, self.app));
             session.pushAll(cb);
@@ -77,7 +77,6 @@ Handler.prototype.entry = function (msg, session, next) {
             next(err, {code: Code.FAIL});
             return;
         }
-
         next(null, {code: Code.OK, player: players ? players[0] : null});
     });
 

@@ -6,6 +6,7 @@ var App = function (aSettings, aCanvas) {
     var app = this;
     var canvas,
         context,
+        client,
         mouse = {x: 0, y: 0, worldx: 0, worldy: 0, player: null},
         keyNav = {x: 0, y: 0};
 
@@ -159,5 +160,7 @@ var App = function (aSettings, aCanvas) {
 
         app.userplayer = new Player();
         app.camera = new Camera(canvas, context, app.userplayer.x, app.userplayer.y);
+        app.client = new Client();
+        app.client.connect();
     })();
 };
