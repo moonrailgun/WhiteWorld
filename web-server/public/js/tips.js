@@ -6,8 +6,24 @@ var Tips = function () {
     var tips = this;
     var tipList = [];
     tips.add = function (tip) {
+        if(tipList.length > 0){
+            var height = $(tip.getDom()).outerHeight() + 10;
+            tips.up(height);
+        }
         tipList.push(tip);
-        tip.show();
+        tip.show(null,function(_tip){
+            var index = tipList.indexOf(_tip);
+            tipList.splice(index, 1);
+        });
+    };
+
+    tips.up = function(height){
+        var value = height ? height : 46;
+        if(tipList.length > 0){
+            for(var i = 0;i<tipList.length;i++){
+                tipList[i].upAnim(value);
+            }
+        }
     };
 
     (function () {
@@ -21,7 +37,7 @@ var Tip = function (text) {
     var tip = this;
     tip.text = text;
     tip.life = 2000;
-    tip.show = function (animType) {
+    tip.show = function (animType,callback) {
         var type = animType ? animType : 'default';
         var dom = tip.getDom();
         dom.css('display', 'block');
@@ -31,7 +47,9 @@ var Tip = function (text) {
         }
 
         setTimeout(function () {
-            tip.removeAnim(dom);
+            tip.removeAnim(function(){
+                callback(tip);
+            });
         }, tip.life);
     };
 
@@ -42,12 +60,13 @@ var Tip = function (text) {
         },200);
     };
 
-    tip.removeAnim = function(){
+    tip.removeAnim = function(callback){
         var dom = tip.getDom();
         $(dom).animate({
             opacity : '0'
         },500, function(){
             $(dom).remove();
+            callback();
         });
     };
 
@@ -69,6 +88,3 @@ var Tip = function (text) {
 };
 
 var tips = new Tips();
-setTimeout(function(){
-    tips.add(new Tip('123'));
-},1000);
