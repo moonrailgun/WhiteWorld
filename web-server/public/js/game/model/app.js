@@ -6,10 +6,10 @@ var App = function (aSettings, aCanvas) {
     var app = this;
     var canvas,
         context,
-        client,
         mouse = {x: 0, y: 0, worldx: 0, worldy: 0, player: null},
         keyNav = {x: 0, y: 0};
 
+    app.client = null;
     app.camera = null;
     app.userplayer = null;//玩家自身对象
     app.allPlayerList = [];//所有玩家列表

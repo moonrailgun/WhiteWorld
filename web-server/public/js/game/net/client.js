@@ -3,6 +3,7 @@
  */
 
 var Client = function(){
+    var sceneManager = new SceneManager();
     var client = this;
     var config = {
         GATE_HOST: window.location.hostname,
@@ -21,11 +22,15 @@ var Client = function(){
                 player: player
             };
             localStorage.setItem('serverInfo', JSON.stringify(info));
-            alert('连接成功');
+            client.applyGameData(player);
         });
     };
 
-    client.applyGameData = function(){
+    client.applyGameData = function(player){
+        var username = player.username;
+        var userid = player.userId;
+        var lastPos = player.lastPos=="" ? "(0,0)" : player.lastPos;
+
 
     };
 
