@@ -28,12 +28,12 @@
             });
         };
 
-        var show = function(){
+        var show = function () {
             hidden = false;
             input.css("opacity", "1");
             input.focus();
         };
-        var hide = function(){
+        var hide = function () {
             hidden = true;
             input.css("opacity", "0");
         };
@@ -82,7 +82,10 @@
             }
         });
 
-        input.onclick = function(e){e.preventDefault();return false;};
+        input.onclick = function (e) {
+            e.preventDefault();
+            return false;
+        };
 
         $(document).keydown(function (e) {
             var k = e.keyCode;
