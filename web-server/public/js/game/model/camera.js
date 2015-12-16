@@ -15,8 +15,6 @@ var Camera = function (aCanvas, aContext, x, y) {
     camera.zoom = this.minZoom;
 
     this.update = function(userplayer) {
-        console.log("x:" + userplayer.x + " y:" + userplayer.y);
-        console.log("cam x:" + camera.x + " y:" + camera.y);
         var targetZoom = (camera.maxZoom + (camera.minZoom - camera.maxZoom) * Math.min(userplayer.momentum, userplayer.maxMomentum) / userplayer.maxMomentum);
         camera.zoom += (targetZoom - camera.zoom) / 60;
 

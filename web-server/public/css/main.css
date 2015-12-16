@@ -115,7 +115,7 @@ body {
     top: 60%;
     left: 50%;
     padding: 10px 20px;
-    background: rgba(255,255,255,.1);
+    background: rgba(0,0,0,.6);
     border-radius: 20px;
     color: #fff;
     text-align: center;
@@ -128,4 +128,5 @@ body {
     -moz-transition: opacity .2s linear;
     -webkit-transition: opacity .2s linear;
     -ms-transition: opacity .2s linear;
+    cursor: default;
 }
