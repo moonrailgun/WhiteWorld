@@ -19,7 +19,8 @@ userDao.getUserByName = function (username, cb) {
         } else {
             if (!!res && res.length === 1) {
                 var rs = res[0];
-                var user = {id: rs.id, name: rs.name, password: rs.password, from: rs.from};
+                mysql.query('UPDATE account SET lastLoginTime = now() WHERE id = ' + rs.id);
+                var user = {id: rs.id, username: rs.username, password: rs.password, from: rs.from};
                 cb(null, user);
             } else {
                 cb(' user not exist ', null);
@@ -37,8 +38,7 @@ userDao.getUserByName = function (username, cb) {
  */
 userDao.createUser = function (username, password, from, cb) {
     var sql = 'insert into account (username,password,`from`,loginCount,lastLoginTime) values(?,?,?,?,?)';
-    var loginTime = Date.now();
-    var args = [username, password, from || '', 1, loginTime];
+    var args = [username, password, from || '', 1, 'now()'];
     mysql.insert(sql, args, function (err, res) {
         if (err !== null) {
             cb({code: err.number, msg: err.message}, null);

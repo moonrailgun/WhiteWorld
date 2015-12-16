@@ -24,7 +24,7 @@ userDao.getPlayersByUid = function(uid, callback) {
         }
     });
 };
-
+//根据ID获取该用户信息
 userDao.getUserById = function (uid, cb){
     var sql = 'select * from	account where id = ?';
     var args = [uid];
@@ -38,6 +38,25 @@ userDao.getUserById = function (uid, cb){
             utils.invokeCallback(cb, null, new User(res[0]));
         } else {
             utils.invokeCallback(cb, ' user not exist ', null);
+        }
+    });
+};
+//根据角色ID获取该角色信息
+userDao.getPlayerByPlayerId = function(uid, callback) {
+    console.log(utils);
+    var sql = 'select * from player where playerId = ?';
+    var args = [uid];
+
+    pomelo.app.get('dbclient').query(sql,args,function(err, res) {
+        if(err) {
+            utils.invokeCallback(callback, err.message, null);
+            return;
+        }
+
+        if(!res || res.length <= 0) {
+            utils.invokeCallback(callback, null, []);
+        } else {
+            utils.invokeCallback(callback, null, res);
         }
     });
 };

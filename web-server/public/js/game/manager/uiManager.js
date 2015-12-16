@@ -74,7 +74,7 @@
                     if (k != keys.esc && input.val().length > 0) {
                         messageHistory.push(input.val());
                         messagePointer = messageHistory.length;
-                        //app.sendMessage(input.val());
+                        sendMessage(input.val());
                     }
                     closechat();
                 }
@@ -93,6 +93,13 @@
                 show();
             }
         });
+
+        var pomelo = window.pomelo;
+        var sendMessage = function (msg) {
+            pomelo.request('chat.chatHandler.send', msg, function (data) {
+                alert(JSON.stringify(data));
+            });
+        };
     };
 
     $(function () {

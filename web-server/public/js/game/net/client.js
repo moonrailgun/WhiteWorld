@@ -3,7 +3,6 @@
  */
 
 var Client = function(){
-    var sceneManager = new SceneManager();
     var client = this;
     var config = {
         GATE_HOST: window.location.hostname,
@@ -31,7 +30,7 @@ var Client = function(){
         var userid = player.userId;
         var lastPos = player.lastPos=="" ? "(0,0)" : player.lastPos;
 
-
+        //todo
     };
 
     var authEntry = function (uid, token, callback) {
@@ -73,6 +72,7 @@ var Client = function(){
         }, function () {
             pomelo.request('connector.entryHandler.entry', {token: token}, function (data) {
                 var player = data.player;
+                console.log(JSON.stringify(player));
                 callback(host, port, player, token);
             });
         })

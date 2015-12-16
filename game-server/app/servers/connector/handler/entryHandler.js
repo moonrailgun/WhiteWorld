@@ -48,9 +48,11 @@ Handler.prototype.entry = function (msg, session, next) {
             }
 
             uid = user.id;
-            userDao.getPlayersByUid(user.id, callback);
+            console.log(uid);
+            userDao.getPlayersByUid(uid, callback);
         }, function (res, cb) {
             //踢出已经在游戏的
+            console.log(res);
             players = res;
             self.app.get('sessionService').kick(uid, cb);
         }, function (cb) {
@@ -64,8 +66,9 @@ Handler.prototype.entry = function (msg, session, next) {
             player = players[0];//之后可能会有多人物选择
 
             //session.set('serverId', self.app.get('areaIdMap')[player.areaId]);//暂时注释
-            session.set('playername', player.username);
-            session.set('playerId', player.id);
+            session.set('playerId', player.playerId);
+            session.set('userId',player.userId);
+            session.set('playerName', player.playerName);
             session.on('closed', onUserLeave.bind(null, self.app));
             session.pushAll(cb);
         }/*, function (cb) {

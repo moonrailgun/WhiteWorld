@@ -10,6 +10,9 @@
                 "frontend": true
             }
         ],
+        "chat": [
+            {"id":"chat-server-1","host":"127.0.0.1","port":3450}
+        ],
         "auth": [
             {"id": "auth-server-1", "host": "127.0.0.1", "port": 3650}
         ],
@@ -35,6 +38,9 @@
         ],
         "auth": [
             {"id": "auth-server-1", "host": "127.0.0.1", "port": 3650}
+        ],
+        "chat": [
+            {"id":"chat-server-1","host":"127.0.0.1","port":3450}
         ],
         "gate": [
             {
