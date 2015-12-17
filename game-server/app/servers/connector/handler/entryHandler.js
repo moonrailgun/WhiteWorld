@@ -67,14 +67,17 @@ Handler.prototype.entry = function (msg, session, next) {
 
             //session.set('serverId', self.app.get('areaIdMap')[player.areaId]);//暂时注释
             session.set('playerId', player.playerId);
-            session.set('userId',player.userId);
+            session.set('userId', player.userId);
             session.set('playerName', player.playerName);
             session.on('closed', onUserLeave.bind(null, self.app));
             session.pushAll(cb);
-        }/*, function (cb) {
+        }, function (cb) {
+            self.app.rpc.chat.chatRemote.add(session, player.playerId, self.app.get('serverId'), 'global', function (members) {
+                console.log(player.playerName + '已加入全局频道, 目前该频道共有' + members.length);
+            });
             //self.app.rpc.chat.chatRemote.add(session, player.userId, player.name,
-             //channelUtil.getGlobalChannelName(), cb);
-        }*/
+            //channelUtil.getGlobalChannelName(), cb);
+        }
     ], function (err) {
         if (err) {
             next(err, {code: Code.FAIL});
@@ -87,18 +90,22 @@ Handler.prototype.entry = function (msg, session, next) {
 };
 
 var onUserLeave = function (app, session, reason) {
-    if (!session || !session.uid) {
+    var playerId = session.get('playerId');
+    if (!session || !playerId) {
         return;
     }
 
-    utils.myPrint('1 ~ OnUserLeave is running ...');
-    app.rpc.area.playerRemote.playerLeave(session, {
-        playerId: session.get('playerId'),
-        instanceId: session.get('instanceId')
-    }, function (err) {
-        if (!!err) {
-            logger.error('user leave error! %j', err);
-        }
+    /*utils.myPrint('1 ~ OnUserLeave is running ...');
+     app.rpc.area.playerRemote.playerLeave(session, {
+     playerId: session.get('playerId'),
+     instanceId: session.get('instanceId')
+     }, function (err) {
+     if (!!err) {
+     logger.error('user leave error! %j', err);
+     }
+     });*/
+
+    app.rpc.chat.chatRemote.kick(session, playerId, app.get('serverId'), 'global', function () {
+        console.log(playerId + '离开了频道');
     });
-    app.rpc.chat.chatRemote.kick(session, session.uid, null);
 };

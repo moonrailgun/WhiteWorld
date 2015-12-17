@@ -21,9 +21,19 @@ var handler = Handler.prototype;
 handler.send = function(msg, session, next){
     var playerId = session.get('playerId');
     var playerName = session.get('playerName');
+
+    var channelService = this.app.get('channelService');
+    var channel = channelService.getChannel('global',true);
+    var ret = {
+        msg: msg,
+        playerId: playerId,
+        playerName: playerName
+    };
     console.log(msg);
     console.log(playerId);
     console.log(playerName);
+    //发送给频道所有用户
+    channel.pushMessage('onChat', ret);
 
     next(null, {code:Code.OK});
 };

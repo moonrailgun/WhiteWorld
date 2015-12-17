@@ -104,5 +104,8 @@
 
     $(function () {
         $('#chat').initChat();
+        pomelo.on('onChat',function(data){
+            console.log(JSON.stringify(data));
+        });
     });
 })(jQuery);
