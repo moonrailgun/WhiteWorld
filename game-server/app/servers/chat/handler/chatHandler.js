@@ -24,5 +24,6 @@ handler.send = function(msg, session, next){
     console.log(msg);
     console.log(playerId);
     console.log(playerName);
-    //console.log(session);
+
+    next(null, {code:Code.OK});
 };
