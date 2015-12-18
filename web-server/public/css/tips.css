@@ -4,7 +4,7 @@ div.tip{
     bottom: 10px;
     z-index: 2;
     color: #ffffff;
-    background-color: rgba(0,0,0,0.2);
+    background-color: rgba(0,0,0,0.5);
     font-weight: bold;
     border-radius: 10px;
     width: auto;

@@ -32,7 +32,6 @@ var Tips = function () {
         }
     })();
 };
-
 var Tip = function (text) {
     var tip = this;
     tip.text = text;

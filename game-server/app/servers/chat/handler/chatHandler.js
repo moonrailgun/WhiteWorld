@@ -29,13 +29,8 @@ handler.send = function(msg, session, next){
         playerId: playerId,
         playerName: playerName
     };
-    console.log(msg);
-    console.log(playerId);
-    console.log(playerName);
     //发送给频道所有用户
-    channel.pushMessage('onChat', ret,null,function(){
-        console.log('发送成功');
-    });
+    channel.pushMessage('onChat', ret);
 
     next(null, {code:Code.OK});
 };

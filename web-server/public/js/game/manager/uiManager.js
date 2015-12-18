@@ -105,8 +105,11 @@
     $(function () {
         $('#chat').initChat();
         pomelo.on('onChat', function (data) {
-            console.log('聊天');
-            console.log(JSON.stringify(data));
+            var playerName = data.playerName;
+            var msg = data.msg;
+            var str = '[公共]' + playerName + ':' + msg;
+            console.log(str);
+            tips.add(new Tip(str));
         });
     });
 })(jQuery);
