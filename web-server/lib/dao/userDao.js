@@ -19,7 +19,7 @@ userDao.getUserByName = function (username, cb) {
         } else {
             if (!!res && res.length === 1) {
                 var rs = res[0];
-                mysql.query('UPDATE account SET lastLoginTime = now() WHERE id = ' + rs.id);
+                mysql.query('UPDATE account SET lastLoginTime = now(),loginCount = loginCount + 1 WHERE id = ' + rs.id);
                 var user = {id: rs.id, username: rs.username, password: rs.password, from: rs.from};
                 cb(null, user);
             } else {
@@ -29,23 +29,34 @@ userDao.getUserByName = function (username, cb) {
     });
 };
 
-/**
- * Create a new user
- * @param {String} username
- * @param {String} password
- * @param {String} from Register source
- * @param {function} cb Call back function.
- */
-userDao.createUser = function (username, password, from, cb) {
+userDao.createUser = function (username, password, from, callback) {
     var sql = 'insert into account (username,password,`from`,loginCount,lastLoginTime) values(?,?,?,?,?)';
     var args = [username, password, from || '', 1, 'now()'];
     mysql.insert(sql, args, function (err, res) {
         if (err !== null) {
-            cb({code: err.number, msg: err.message}, null);
+            callback({code: err.number, msg: err.message}, null);
         } else {
             var userId = res.insertId;
             var user = {id: res.insertId, name: username, password: password, loginCount: 1, lastLoginTime: loginTime};
-            cb(null, user);
+            callback(null, user);
         }
     });
+};
+
+userDao.createPlayer = function (userId, playerName, callback) {
+    var x = Math.random() * 300 - 150;
+    var y = Math.random() * 300 - 150;
+    var pos = '(' + x + ',' + y + ')';
+
+    var sql = 'insert into player (userId,playerName,lastPos) values(?,?,?)';
+    var args = [userId, playerName, pos];
+    mysql.insert(sql, args, function (err, res) {
+        if (err !== null) {
+            callback({code: err.number, msg: err.message}, null);
+        } else {
+            var playerId = res.insertId;
+            var player = {id: playerId, userId: userId, playerName: playerName, lastPos: pos};
+            callback(null, player);
+        }
+    })
 };
