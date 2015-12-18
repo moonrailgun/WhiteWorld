@@ -33,7 +33,9 @@ handler.send = function(msg, session, next){
     console.log(playerId);
     console.log(playerName);
     //发送给频道所有用户
-    channel.pushMessage('onChat', ret);
+    channel.pushMessage('onChat', ret,null,function(){
+        console.log('发送成功');
+    });
 
     next(null, {code:Code.OK});
 };

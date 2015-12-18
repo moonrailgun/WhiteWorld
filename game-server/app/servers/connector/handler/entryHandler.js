@@ -48,15 +48,14 @@ Handler.prototype.entry = function (msg, session, next) {
             }
 
             uid = user.id;
-            console.log(uid);
             userDao.getPlayersByUid(uid, callback);
         }, function (res, cb) {
-            //踢出已经在游戏的
+            //踢出已经在游戏的，并获取数据
             console.log(res);
             players = res;
             self.app.get('sessionService').kick(uid, cb);
         }, function (cb) {
-            session.bind(uid, cb);
+            session.bind(uid, cb);//将session与uid绑定
         }, function (cb) {
             if (!players || players.length === 0) {
                 next(null, {code: Code.OK});
@@ -67,16 +66,14 @@ Handler.prototype.entry = function (msg, session, next) {
 
             //session.set('serverId', self.app.get('areaIdMap')[player.areaId]);//暂时注释
             session.set('playerId', player.playerId);
-            session.set('userId', player.userId);
+            session.set('userId', uid);
             session.set('playerName', player.playerName);
             session.on('closed', onUserLeave.bind(null, self.app));
             session.pushAll(cb);
         }, function (cb) {
-            self.app.rpc.chat.chatRemote.add(session, player.playerId, self.app.get('serverId'), 'global', function (members) {
-                console.log(player.playerName + '已加入全局频道, 目前该频道共有' + members.length);
+            self.app.rpc.chat.chatRemote.add(session, uid, self.app.get('serverId'), 'global', function (members) {
+                console.log('[' + self.app.get('serverId') + ']玩家' + player.playerName + '已加入全局频道, 目前该频道共有' + members.length + '人');
             });
-            //self.app.rpc.chat.chatRemote.add(session, player.userId, player.name,
-            //channelUtil.getGlobalChannelName(), cb);
         }
     ], function (err) {
         if (err) {
@@ -90,8 +87,9 @@ Handler.prototype.entry = function (msg, session, next) {
 };
 
 var onUserLeave = function (app, session, reason) {
-    var playerId = session.get('playerId');
-    if (!session || !playerId) {
+    var userId = session.get('userId');
+    var playerName = session.get('playerName');
+    if (!session || !userId) {
         return;
     }
 
@@ -105,7 +103,7 @@ var onUserLeave = function (app, session, reason) {
      }
      });*/
 
-    app.rpc.chat.chatRemote.kick(session, playerId, app.get('serverId'), 'global', function () {
-        console.log(playerId + '离开了频道');
+    app.rpc.chat.chatRemote.kick(session, userId, app.get('serverId'), 'global', function () {
+        console.log('[' + app.get('serverId') + ']玩家' + playerName + '离开了频道');
     });
 };

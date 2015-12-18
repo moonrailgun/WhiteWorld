@@ -13,10 +13,10 @@ var ChatRemote = function (app) {
 
 //添加用户到这个频道
 var remote = ChatRemote.prototype;
-remote.add = function (playerId, sessionId, channelName, callback) {
+remote.add = function (userId, sessionId, channelName, callback) {
     var channel = this.channelService.getChannel(channelName, true);
     if (!!channel) {
-        channel.add(playerId, sessionId);
+        channel.add(userId, sessionId);
     }
 
     callback(channel.getMembers());
@@ -26,10 +26,10 @@ remote.get = function () {
 
 };
 //踢出用户
-remote.kick = function (playerId, sessionId, channelName, callback) {
+remote.kick = function (userId, sessionId, channelName, callback) {
     var channel = this.channelService.getChannel(channelName, false);
     if (!!channel) {
-        channel.leave(playerId, sessionId);
+        channel.leave(userId, sessionId);
         callback();
     }
 };

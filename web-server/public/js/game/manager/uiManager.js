@@ -97,14 +97,15 @@
         var pomelo = window.pomelo;
         var sendMessage = function (msg) {
             pomelo.request('chat.chatHandler.send', msg, function (data) {
-                alert(JSON.stringify(data));
+                console.log(JSON.stringify(data));
             });
         };
     };
 
     $(function () {
         $('#chat').initChat();
-        pomelo.on('onChat',function(data){
+        pomelo.on('onChat', function (data) {
+            console.log('聊天');
             console.log(JSON.stringify(data));
         });
     });

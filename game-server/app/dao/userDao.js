@@ -7,7 +7,6 @@ var userDao = module.exports;
 
 //获取该用户uid下所有人物
 userDao.getPlayersByUid = function(uid, callback) {
-    console.log(utils);
     var sql = 'select * from player where userId = ?';
     var args = [uid];
 
