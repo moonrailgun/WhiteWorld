@@ -13,11 +13,13 @@ var initApp = function () {
     if (app != null) {
         return;
     }
+
     app = new App(settings, document.getElementById('game-scene'));
     window.addEventListener('resize', app.resize, false);
-    document.addEventListener('mousemove', app.mousemove, false);
-    document.addEventListener('mousedown', app.mousedown, false);
-    document.addEventListener('mouseup', app.mouseup, false);
+    var gameScene = $('#game-scene');
+    gameScene.mousemove(app.mousemove);
+    gameScene.mousedown(app.mousedown);
+    gameScene.mouseup(app.mouseup);
 
     document.addEventListener('touchstart', app.touchstart, false);
     document.addEventListener('touchend', app.touchend, false);

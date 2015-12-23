@@ -84,6 +84,7 @@ var Camera = function (aCanvas, aContext, x, y) {
         context.lineTo(bounds[1].x, bounds[0].y);
         context.closePath();
         context.stroke();
+        context.fillStyle = '#666';
         context.fillText(text, bounds[0].x + 10, bounds[0].y + 10);
     };
 
