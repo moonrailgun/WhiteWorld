@@ -155,3 +155,36 @@ body {
     z-index: -1;
     display: none;
 }
+#menu-main{
+    height: 85%;
+}
+#menu-cell{
+    height: 15%;
+    font-size: 18px;
+    width: 100%;
+}
+
+#menu-cell li{
+    display: block;
+    width: 33%;
+    text-align: center;
+    margin: 0;
+    height: 100%;
+    /*padding: 30px 0;*/
+    box-sizing:border-box;
+    background-color:rgba(183, 183, 183,1);
+    position: relative;
+    float: left;
+
+
+}
+#menu-cell li span{
+    height: 25px;
+    margin: auto;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+}
+
+#menu-cell li.actived{
+    border-top: solid 5px #ff9863;
+}
