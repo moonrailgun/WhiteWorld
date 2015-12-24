@@ -10,8 +10,9 @@
     });
 
     $('#menu-cell li').click(function(event){
-        var obj = this;
-        $('.actived').removeClass('actived');
-        $(obj).addClass('actived');
+        var list = $('#menu-cell li');
+        var index = list.index(this);
+        var left = index * (1/list.length * 100);
+        $('#menu-indicator').animate({left:left+'%'},200);
     })
 })();

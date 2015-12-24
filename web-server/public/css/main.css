@@ -186,5 +186,13 @@ body {
 }
 
 #menu-cell li.actived{
-    border-top: solid 5px #ff9863;
+    /*border-top: solid 5px #ff9863;*/
+}
+#menu-indicator{
+    height: 6px;
+    width: 33%;
+    background-color: #ff9863;
+    position: absolute;
+    top: 85%;
+    left: 33%;
 }
