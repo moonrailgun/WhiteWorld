@@ -7,5 +7,8 @@ module.exports = {
         RES: 200,
         ERR: 500,
         PUSH: 600
+    },
+    EntityType: {
+        PLAYER: 'player'
     }
 };

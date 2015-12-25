@@ -70,9 +70,11 @@ Handler.prototype.entry = function (msg, session, next) {
             session.set('playerName', player.playerName);
             session.on('closed', onUserLeave.bind(null, self.app));
             session.pushAll(cb);
+            console.log('[' + self.app.get('serverId') + ']玩家' + player.playerName + '已成功登陆游戏');
         }, function (cb) {
             self.app.rpc.chat.chatRemote.add(session, uid, self.app.get('serverId'), 'global', function (members) {
                 console.log('[' + self.app.get('serverId') + ']玩家' + player.playerName + '已加入全局频道, 目前该频道共有' + members.length + '人');
+                cb();
             });
         }
     ], function (err) {

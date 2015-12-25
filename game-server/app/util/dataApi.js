@@ -1,6 +1,7 @@
 /**
  * Created by Chen on 2015-12-20.
  */
+var area = require('../../config/data/area');
 
 var Data = function (data) {
     var fields = {};
@@ -23,4 +24,8 @@ var mapData = function (fields, item) {
         obj[k] = item[fields[k]];
     }
     return obj;
+};
+
+module.exports = {
+    area: new Data(area),
 };

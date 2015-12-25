@@ -14,13 +14,17 @@ var Client = function(){
         authEntry(uid, token, function (host, port, player, token) {
             localStorage.setItem('username', player.username);
             localStorage.setItem('token', token);
-            //切换场景
+
             var info = {
                 host: host,
                 port: port,
                 player: player
             };
             localStorage.setItem('serverInfo', JSON.stringify(info));
+            pomelo.request('area.playerHandler.enterScene',{playerName: player.playerName,playerId: player.playerId},function(data){
+                console.log(data);
+            });
+
             client.applyGameData(player);
         });
     };
@@ -71,9 +75,7 @@ var Client = function(){
             log: true
         }, function () {
             pomelo.request('connector.entryHandler.entry', {token: token}, function (data) {
-                var player = data.player;
-                console.log(JSON.stringify(player));
-                callback(host, port, player, token);
+                callback(host, port, data.player, token);
             });
         })
     }
