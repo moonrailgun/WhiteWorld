@@ -9,6 +9,7 @@ module.exports = {
         PUSH: 600
     },
     EntityType: {
-        PLAYER: 'player'
+        PLAYER: 'player',
+        MOB: 'mob'
     }
 };
