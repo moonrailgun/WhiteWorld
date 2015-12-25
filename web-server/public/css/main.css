@@ -17,7 +17,8 @@ body {
     left: 0;
     z-index: 2;
 }
-#position{
+
+#position {
     position: absolute;
     top: 0;
     right: 0;
@@ -25,9 +26,10 @@ body {
     font-size: 18px;
     text-align: right;
 }
+
 #debugInfo {
     position: absolute;
-    top:24px;
+    top: 24px;
     right: 0;
     z-index: 2;
 }
@@ -43,6 +45,7 @@ body {
     font-size: 1.5em;
     font-weight: bold;
 }
+
 #cant-connect a:link {
     color: #c0fdf7;
     text-decoration: underline;
@@ -68,11 +71,13 @@ body {
     font-size: 1.5em;
     border: 1px solid #fff;
 }
+
 #unsupported-browser p {
     color: #000;
     text-shadow: white 1px 1px 0;
     line-height: 1.4em;
 }
+
 #force-init-button {
     font-size: .6em;
     color: #e47c6c;
@@ -80,10 +85,12 @@ body {
     font-weight: bold;
     text-decoration: underline;
 }
+
 #force-init-button:hover {
     color: #999;
 }
-#unsupported-browser ul li  {
+
+#unsupported-browser ul li {
     display: inline;
     list-style-type: none;
     padding-right: 10px;
@@ -91,38 +98,39 @@ body {
     padding: 4px 10px 4px 10px;
     background-color: #606061;
     border-radius: 100px;
-    box-shadow:inset -1px -1px -5px #000;
+    box-shadow: inset -1px -1px 5px #000;
     text-shadow: none;
     font-size: .8em;
 }
-#unsupported-browser ul   {
+
+#unsupported-browser ul {
     margin: 20px 0px 20px 0px;
 }
 
-#chatText
-{
-    display:inline-block;
+#chatText {
+    display: inline-block;
 }
-#chatText,#chat
-{
-    font-size:3em;
+
+#chatText, #chat {
+    font-size: 3em;
     font-weight: bold;
     max-width: 70%;
 }
+
 #chat {
     display: block;
     position: absolute;
     top: 60%;
     left: 50%;
     padding: 10px 20px;
-    background: rgba(0,0,0,.6);
+    background: rgba(0, 0, 0, .6);
     border-radius: 20px;
     color: #fff;
     text-align: center;
-    border-style:none;
-    outline-style:none;
-    height:30px;
-    opacity:0;
+    border-style: none;
+    outline-style: none;
+    height: 30px;
+    opacity: 0;
     transition: opacity .2s linear;
     -o-transition: opacity .2s linear;
     -moz-transition: opacity .2s linear;
@@ -131,13 +139,14 @@ body {
     cursor: default;
 }
 
-#menu{
+#menu {
     position: absolute;
     z-index: 2;
     left: 30px;
     bottom: 30px;
 }
-#menu-button{
+
+#menu-button {
     width: 60px;
     height: 60px;
     border-radius: 500px;
@@ -145,7 +154,7 @@ body {
     border: solid 4px #b7b7b7;
 }
 
-#menu-content{
+#menu-content {
     position: absolute;
     background-color: rgba(183, 183, 183, 0.9);
     width: 350px;
@@ -155,44 +164,54 @@ body {
     z-index: -1;
     display: none;
 }
-#menu-main{
+
+#menu-main {
     height: 85%;
 }
-#menu-cell{
+
+#menu-cell {
     height: 15%;
     font-size: 18px;
     width: 100%;
 }
 
-#menu-cell li{
+#menu-cell li {
     display: block;
-    width: 33%;
+    width: 33.3333333333333%;
     text-align: center;
     margin: 0;
     height: 100%;
     /*padding: 30px 0;*/
-    box-sizing:border-box;
-    background-color:rgba(183, 183, 183,1);
+    box-sizing: border-box;
+    background-color: rgba(183, 183, 183, 1);
     position: relative;
     float: left;
 
-
+    transition: all 0.2s ease-in-out 0s;
+    -moz-transition: all 0.2s ease-in-out 0s;
+    -webkit-transition: all 0.2s ease-in-out 0s;
+    -o-transition: all 0.2s ease-in-out 0s;
 }
-#menu-cell li span{
-    height: 25px;
+
+#menu-cell li:hover {
+    background-color: rgb(159, 159, 159);
+}
+
+#menu-cell li span {
+    height: 40px;
     margin: auto;
     position: absolute;
-    top: 0; left: 0; bottom: 0; right: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
 }
 
-#menu-cell li.actived{
-    /*border-top: solid 5px #ff9863;*/
-}
-#menu-indicator{
+#menu-indicator {
     height: 6px;
     width: 33%;
     background-color: #ff9863;
     position: absolute;
     top: 85%;
-    left: 33%;
+    left: 0%;
 }
