@@ -2,6 +2,8 @@ var logger = require('pomelo-logger').getLogger(__filename);
 var pomelo = require('pomelo');
 var utils = require('../util/utils');
 var User = require('../domain/user');
+var async = require('async');
+var bagDao = require('./bagDao');
 
 var userDao = module.exports;
 
@@ -41,10 +43,9 @@ userDao.getUserById = function (uid, cb){
     });
 };
 //根据角色ID获取该角色信息
-userDao.getPlayerByPlayerId = function(uid, callback) {
-    console.log(utils);
+userDao.getPlayerByPlayerId = function(playerId, callback) {
     var sql = 'select * from player where playerId = ?';
-    var args = [uid];
+    var args = [playerId];
 
     pomelo.app.get('dbclient').query(sql,args,function(err, res) {
         if(err) {
@@ -58,4 +59,20 @@ userDao.getPlayerByPlayerId = function(uid, callback) {
             utils.invokeCallback(callback, null, res);
         }
     });
+};
+//根据角色ID获取该玩家所有数据
+userDao.getPlayerAllInfo = function(playerId, callback){
+    async.parallel([
+        function(callback){
+            userDao.getPlayerByPlayerId(playerId, function(err, player){
+                if(!!err || !player){
+                    logger.error('获取角色失败:' + err.stack);
+                }
+                callback(err,player);
+            });
+        },
+        function(callback){
+            //todo 获取玩家背包数据
+        }
+    ])
 };
