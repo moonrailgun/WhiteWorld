@@ -24,3 +24,51 @@ bagDao.createBag = function(playerId, callback){
         }
     });
 };
+
+bagDao.getBagByPlayerId = function(playerId, cb) {
+    var sql = 'select * from Bag where playerId = ?';
+    var args = [playerId];
+
+    pomelo.app.get('dbclient').query(sql, args, function(err, res) {
+        if (err) {
+            logger.error('无法通过ID获取玩家背包数据! ' + err.stack);
+            utils.invokeCallback(cb, err, null);
+        } else {
+            if (res && res.length === 1) {
+                var result = res[0];
+                var bag = new Bag({ id: result.id, itemCount: result.itemCount, items: JSON.parse(result.items) });
+                cb(null, bag);
+            } else {
+                logger.error('背包不存在');
+                utils.invokeCallback(cb, new Error(' 背包不存在 '), null);
+            }
+        }
+    });
+};
+
+bagDao.update = function(bag, cb) {
+    var sql = 'update Bag set items = ? where id = ?';
+    var items = bag.items;
+    if (typeof items !== 'string') {
+        items = JSON.stringify(items);
+    }
+
+    var args = [items, bag.id];
+
+    pomelo.app.get('dbclient').query(sql, args, function(err, res) {
+        if (err) {
+            logger.error('写入数据库失败!　' + sql + ' ' + JSON.stringify(bag));
+        }
+
+        utils.invokeCallback(cb, !!err);
+    });
+};
+
+bagDao.destroy = function(playerId, cb) {
+    var sql = 'delete from Bag where playerId = ?';
+    var args = [playerId];
+
+    pomelo.app.dbclinet.query(sql, args, function(err, res) {
+        utils.invokeCallback(cb, err, res);
+    });
+};
