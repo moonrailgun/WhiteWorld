@@ -5,25 +5,29 @@
 var fs = require('fs');
 var area = require('../../../domain/area/area');
 var dataApi = require('../../../util/dataApi');
-var Player = require('../../../domain/entity/player');
 var userDao = require('../../../dao/userDao');
 var bagDao = require('../../../dao/bagDao');
+var logger = require('pomelo-logger').getLogger(__filename);
+var consts = require('../../../consts/consts');
 
 var handler = module.exports;
 
-handler.enterScene = function(msg,session,next){
+handler.enterScene = function (msg, session, next) {
     var playerId = session.get('playerId');
     var playerName = session.get('playerName');
-    var player = new Player({id:playerId, playerName:playerName});
-    player.serverId = session.frontendId;//前端连接服务器ID
 
-    userDao.getPlayerAllInfo(playerId,function(err, player){
+    userDao.getPlayerAllInfo(playerId, function (err, player) {
+        if(!!err || !player){
+            logger.error('获取用户信息失败' + err.stack);
+            next(new Error('无法获取用户信息'), {code: consts.MESSAGE.ERR});
+            return;
+        }
+
+        player.serverId = session.frontendId;//前端连接服务器ID
         //todo
     });
 
-    var data = {
+    var data = {};
 
-    };
-
-    next(null,data);
+    next(null, data);
 };

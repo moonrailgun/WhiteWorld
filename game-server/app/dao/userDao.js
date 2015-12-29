@@ -4,6 +4,7 @@ var utils = require('../util/utils');
 var User = require('../domain/user');
 var async = require('async');
 var bagDao = require('./bagDao');
+var Player = require('../domain/entity/player');
 
 var userDao = module.exports;
 
@@ -43,7 +44,7 @@ userDao.getUserById = function (uid, cb){
     });
 };
 //根据角色ID获取该角色信息
-userDao.getPlayerByPlayerId = function(playerId, callback) {
+userDao.getPlayer = function(playerId, callback) {
     var sql = 'select * from player where playerId = ?';
     var args = [playerId];
 
@@ -56,7 +57,7 @@ userDao.getPlayerByPlayerId = function(playerId, callback) {
         if(!res || res.length <= 0) {
             utils.invokeCallback(callback, null, []);
         } else {
-            utils.invokeCallback(callback, null, res);
+            utils.invokeCallback(callback, null, new Player(res[0]));
         }
     });
 };
@@ -64,7 +65,7 @@ userDao.getPlayerByPlayerId = function(playerId, callback) {
 userDao.getPlayerAllInfo = function(playerId, callback){
     async.parallel([
         function(callback){
-            userDao.getPlayerByPlayerId(playerId, function(err, player){
+            userDao.getPlayer(playerId, function(err, player){
                 if(!!err || !player){
                     logger.error('获取角色失败:' + err.stack);
                 }
@@ -72,7 +73,23 @@ userDao.getPlayerAllInfo = function(playerId, callback){
             });
         },
         function(callback){
-            //todo 获取玩家背包数据
+            bagDao.getBagByPlayerId(playerId, function(err, bag){
+                if(!!err || !bag){
+                    logger.error('获取背包数据失败' + err.stack);
+                }
+                callback(err, bag);
+            });
         }
-    ])
+    ],function(err, results){
+        var player = results[0];
+        var bag = results[1];
+
+        player.bag = bag;
+
+        if(!!err){
+            utils.invokeCallback(callback, err);
+        }else{
+            utils.invokeCallback(callback, null, player);
+        }
+    });
 };
