@@ -8,7 +8,7 @@ var pomelo = require('pomelo');
 var EntityType = require('../../consts/consts').EntityType;
 var logger = require('pomelo-logger').getLogger(__filename);
 
-var exp = module.exports;
+
 
 var id = 0;
 var width = 0;
@@ -17,6 +17,12 @@ var players = {};
 var entities = {};
 var channel = null;
 var mobCounts = 0;
+
+var exp = function(){
+    this.emptyTime = Date.now();
+};
+
+module.exports = exp;
 
 exp.init = function(opts) {
     id = opts.id;
@@ -112,3 +118,7 @@ exp.actionManager = function() {
 exp.timer = function() {
     return timer;
 };
+
+exp.isEmpty = function(){
+    return this.playerNum == 0;
+}

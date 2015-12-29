@@ -1,5 +1,6 @@
 var pomelo = require('pomelo');
 var sync = require('pomelo-sync-plugin');
+var playerFilter = require('./app/servers/area/filter/playerFilter');
 
 /**
  * Init app for client.
@@ -16,6 +17,20 @@ app.configure('production|development', function() {
 app.configure('production|development', 'auth', function() {
     // 读取配置文件
     app.set('session', require('./config/session.json'));
+});
+
+app.configure('production|development','area',function(){
+    app.before(playerFilter());
+
+    var server = app.curServer;
+    //todo
+    if(server.instance){
+        instancePool.init(require('./config/instance.json'));
+        app.areaManager = instancePool;
+    }else {
+        scene.init(dataApi.area.findById(server.area));
+        app.areaManager = scene;
+    }
 });
 
 // 数据库配置
