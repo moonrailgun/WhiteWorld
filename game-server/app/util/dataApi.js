@@ -26,6 +26,52 @@ var mapData = function (fields, item) {
     return obj;
 };
 
+Data.prototype.findBy = function(attr, value){
+    var result = [];
+    var i,item;
+    for(i in this.data){
+        item = this.data[i];
+        if(item[attr] == value){
+            result.push(item);
+        }
+    }
+    return result;
+};
+
+Data.prototype.findBigger = function(attr,value){
+    var result = [];
+    value = Number(value);
+    var i, item;
+    for (i in this.data) {
+        item = this.data[i];
+        if (Number(item[attr]) >= value) {
+            result.push(item);
+        }
+    }
+    return result;
+};
+
+Data.prototype.findSmaller = function(attr, value) {
+    var result = [];
+    value = Number(value);
+    var i, item;
+    for (i in this.data) {
+        item = this.data[i];
+        if (Number(item[attr]) <= value) {
+            result.push(item);
+        }
+    }
+    return result;
+};
+
+Data.prototype.findById = function(id) {
+    return this.data[id];
+};
+
+Data.prototype.all = function() {
+    return this.data;
+};
+
 module.exports = {
     area: new Data(area),
 };
