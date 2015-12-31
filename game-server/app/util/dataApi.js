@@ -1,7 +1,7 @@
 /**
  * Created by Chen on 2015-12-20.
  */
-var area = require('../../config/data/area');
+var area = require('../../config/data/area.json');
 
 var Data = function (data) {
     var fields = {};

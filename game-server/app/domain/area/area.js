@@ -7,7 +7,8 @@ var dataApi = require('../../util/dataApi');
 var pomelo = require('pomelo');
 var EntityType = require('../../consts/consts').EntityType;
 var logger = require('pomelo-logger').getLogger(__filename);
-
+var Timer = require('./timer');
+var channelUtil = require('../../util/channelUtil');
 
 var id = 0;
 var width = 0;
@@ -17,107 +18,93 @@ var entities = {};
 var channel = null;
 var mobCounts = 0;
 
-var exp = function () {
+var Instance = function (opts) {
+    this.areaId = opts.id;
+    this.type = opts.type;
+    this.map = opts.map;
+
+    this.players = {};
+    this.users = {};
+    this.entities = {};
+    this.zones = {};
+    this.items = {};
+    this.channel = null;
+
+    this.playerNum = 0;
     this.emptyTime = Date.now();
+
+    this.timer = new Timer({
+        area : this,
+        interval : 100
+    });
+
+    this.start();
 };
 
-module.exports = exp;
+module.exports = Instance;
 
-exp.init = function (opts) {
-    id = opts.id;
-    width = opts.width;
-    height = opts.height;
-
-    //area run
+Instance.prototype.start = function(){
+    this.timer.run();
 };
 
-var getChannel = exp.getChannel = function () {
-    if (channel) {
-        return channel;
+Instance.prototype.close = function(){
+    this.timer.close();
+};
+
+Instance.prototype.getChannel = function(){
+    if(!this.channel){
+        var channelName = channelUtil.getAreaChannelName(this.areaId);
+        this.channel = pomelo.app.get('channelService').getChannel(channelName, true);
     }
-
-    channel = pomelo.app.get('channelService').getChannel('area_' + id, true);
-    return channel;
+    return this.channel;
 };
 
-var addEvent = function (player) {
-    //player.on('pickItem', function(args) {
-    //    var player = exp.getEntity(args.entityId);
-    //    var treasure = exp.getEntity(args.target);
-    //    player.target = null;
-    //    if (treasure) {
-    //        player.addScore(treasure.score);
-    //        exp.removeEntity(args.target);
-    //        getChannel().pushMessage({route: 'onPickItem', entityId: args.entityId, target: args.target, score: treasure.score});
-    //    }
-    //});
-};
-var added = [];//一个tick内要增加的实体
-var reduced = [];//一个tick内要减少的实体
+//todo
+Instance.prototype.addEntity = function(entity){
+    var entities = this.entities;
+    var players = this.players;
+    var users = this.users;
 
-exp.addEntity = function (entity) {
-    if (!entity || !entity.entityId) {
+    if(!entity || !entity.entityId){
+        return false;
+    }
+    if(!!players[entity.id]){
+        logger.error('已经添加过该玩家： %j', entity);
         return false;
     }
 
+    entity.area = this;
     entities[entity.entityId] = entity;
-    if (entity.type === EntityType.PLAYER) {
-        getChannel().add(entity.id, entity.serverId);
-        addEvent(entity);
-
-        if (!!players[entity.id]) {
-            logger.error('add player twice! player : %j', entity);
-        }
-        players[entity.id] = entity.entityId;
-    } else if (entity.type === EntityType.MOB) {
-        mobCounts++;
+    if(entity.type === EntityType.PLAYER) {
+        this.getChannel().add(entity.playerId, entity.serverId);
+        //todo
+    }else if(entity.type === EntityType.MOB){
+        //todo
     }
-    added.push(entity);
     return true;
 };
 
-exp.removeEntity = function (entityId) {
-    var entity = entities[entityId];
+Instance.prototype.getEntity = function(entityId) {
+    var entity = this.entities[entityId];
     if (!entity) {
-        return false;
+        return null;
+    }
+    return entity;
+};
+
+Instance.prototype.getAllPlayers = function() {
+    var _players = [];
+    for(var id in this.players) {
+        _players.push(this.entities[this.players[id]]);
     }
 
-    if (entity.type === EntityType.PLAYER) {
-        getChannel().leave(entity.id, entity.serverId);
-        delete players[entity.id];
-    } else if (entity.type === EntityType.MOB) {
-        mobCounts--;
-    }
-
-    delete entities[entityId];
-    reduced.push(entityId);
-    return true;
+    return _players;
 };
 
-exp.getEntity = function (entityId) {
-    return entities[entityId];
+Instance.prototype.getAllEntities = function() {
+    return this.entities;
 };
 
-exp.width = function () {
-    return width;
+Instance.prototype.isEmpty = function(){
+    return this.playerNum === 0;
 };
-
-exp.height = function () {
-    return height;
-};
-
-exp.entities = function () {
-    return entities;
-};
-
-exp.actionManager = function () {
-    return actionManager;
-};
-
-exp.timer = function () {
-    return timer;
-};
-
-exp.isEmpty = function () {
-    return this.playerNum == 0;
-}

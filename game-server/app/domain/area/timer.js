@@ -5,7 +5,7 @@
 var EntityType = require('../../consts/consts').EntityType;
 var logger = require('pomelo-logger').getLogger(__filename);
 
-var Timer = function(){
+var Timer = function(opts){
     this.area = opts.area;
     this.interval = opts.interval || 100;
 };
