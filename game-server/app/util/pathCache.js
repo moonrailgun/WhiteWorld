@@ -2,14 +2,14 @@
  * Created by Chen on 2015-12-30.
  */
 
-var PriorityQueue = require('pomelo-collection').priorityQueue;
+//var PriorityQueue = require('pomelo-collection').priorityQueue;
 var id = 0;
 
 var PathCache = function (opts) {
     this.id = id++;
     this.limit = opts.limit || 30000;
     this.size = 0;
-    this.queue = new PriorityQueue(comparator);
+    //this.queue = new PriorityQueue(comparator);
     this.cache = {};
 };
 

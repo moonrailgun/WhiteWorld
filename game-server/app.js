@@ -22,8 +22,8 @@ app.configure('production|development', 'auth', function () {
 });
 
 app.configure('production|development', 'area', function () {
-    app.filter(pomelo.filters.serial());
-    app.before(playerFilter());
+    //app.filter(pomelo.filters.serial());
+    //app.before(playerFilter());
 
     var server = app.curServer;
     if (server.instance) {
@@ -31,10 +31,10 @@ app.configure('production|development', 'area', function () {
         app.areaManager = instancePool;
     } else {
         //todo
-        scene.init(dataApi.area.findById(server.area));
-        app.areaManager = scene;
+        //scene.init(dataApi.area.findById(server.area));
+        //app.areaManager = scene;
     }
-    areaService.init();
+    //areaService.init();
 });
 
 // 数据库配置

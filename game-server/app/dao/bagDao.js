@@ -40,7 +40,17 @@ bagDao.getBagByPlayerId = function(playerId, cb) {
                 cb(null, bag);
             } else {
                 logger.error('背包不存在');
-                utils.invokeCallback(cb, new Error(' 背包不存在 '), null);
+                //utils.invokeCallback(cb, new Error('背包不存在'), null);
+
+                logger.info('开始创建玩家背包数据');
+                bagDao.createBag(playerId, function(err, bag){
+                    if(!!err){
+                        cb(err, null);
+                        return;
+                    }
+
+                    cb(null, bag);
+                });
             }
         }
     });

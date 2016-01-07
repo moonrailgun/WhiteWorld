@@ -21,7 +21,9 @@ var Client = function(){
                 player: player
             };
             localStorage.setItem('serverInfo', JSON.stringify(info));
+            console.log('正在进入场景');
             pomelo.request('area.playerHandler.enterScene',{playerName: player.playerName,playerId: player.playerId},function(data){
+
                 console.log(data);
             });
 

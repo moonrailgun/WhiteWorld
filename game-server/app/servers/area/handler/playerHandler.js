@@ -9,10 +9,12 @@ var userDao = require('../../../dao/userDao');
 var bagDao = require('../../../dao/bagDao');
 var logger = require('pomelo-logger').getLogger(__filename);
 var consts = require('../../../consts/consts');
+var channelUtil = require('../../../util/channelUtil');
 
 var handler = module.exports;
 
 handler.enterScene = function (msg, session, next) {
+    console.log('a');
     var playerId = session.get('playerId');
     var playerName = session.get('playerName');
 
@@ -24,7 +26,12 @@ handler.enterScene = function (msg, session, next) {
         }
 
         player.serverId = session.frontendId;//前端连接服务器ID
+        //console.log(player);
+        //pomelo.app.rpc.chat.chatRemote.add(session, player.)
         //todo
+
+
+        next(null, player);
     });
 
     var data = {};

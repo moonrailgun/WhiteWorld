@@ -83,6 +83,7 @@ userDao.getPlayerAllInfo = function(playerId, callback){
     ],function(err, results){
         var player = results[0];
         var bag = results[1];
+        console.log(results);
 
         player.bag = bag;
 

@@ -6,7 +6,7 @@ var util = require('util');
 var Entity = require('./entity/entity');
 var EntityType = require('../consts/consts').EntityType;
 var Persistent = require('./persistent');
-var logger = require('pomelo=logger').getLogger(__filename);
+var logger = require('pomelo-logger').getLogger(__filename);
 
 var Bag = function(opts){
     Persistent.call(this, opts);

@@ -2,7 +2,7 @@
  * Created by Chen on 2015-12-30.
  */
 
-var buildFinder = require('pomelo-pathfinding').buildFinder;
+//var buildFinder = require('pomelo-pathfinding').buildFinder;
 var PathCache = require('../../util/pathCache');
 var logger = require('pomelo-logger').getLogger(__filename);
 
@@ -34,7 +34,7 @@ Map.prototype.init = function(opts){
         this.rectH = Math.ceil(this.height/ this.tileH);
 
         this.pathCache = new PathCache({limit:1000});
-        this.pfinder = buildFinder(this);
+        //this.pfinder = buildFinder(this);
     }
 };
 
