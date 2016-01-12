@@ -25,17 +25,13 @@ var Client = function(){
             pomelo.request('area.playerHandler.enterScene',{playerName: player.playerName,playerId: player.playerId},function(data){
                 localStorage.setItem('player',JSON.stringify(data));
                 //应用数据
-
+                client.applyGameData(player);
             });
-
-            client.applyGameData(player);
         });
     };
 
     client.applyGameData = function(player){
-        var username = player.username;
-        var userid = player.userId;
-        var lastPos = player.lastPos=="" ? "(0,0)" : player.lastPos;
+        console.log(player);
 
         //todo
     };

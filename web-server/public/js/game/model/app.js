@@ -2,6 +2,7 @@
  * Created by Chen on 2015-12-10.
  */
 
+//弃用
 var App = function (aSettings, aCanvas) {
     var app = this;
     var canvas,

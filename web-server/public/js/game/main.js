@@ -1,14 +1,16 @@
 /**
  * Created by Chen on 2015-12-10.
  */
-var app;
+//var app;
+var gameManager;
 var settings = new Settings();
-//循环运行
+/*//循环运行
 var runLoop = function () {
     app.update();
     app.draw();
-};
+};*/
 //初始化
+/*
 var initApp = function () {
     if (app != null) {
         return;
@@ -30,11 +32,20 @@ var initApp = function () {
     document.addEventListener('keyup', app.keyup, false);
 
     setInterval(runLoop, 30);//开始执行
+};*/
+
+//应用初始化
+var gameInit = function(){
+    if(gameManager != null){
+        console.log('game have been init');
+        return;
+    }
+    gameManager = new GameManager(document.getElementById('game-scene'));
 };
 
 //强制初始化
 var forceInit = function () {
-    initApp();
+    gameInit();
     document.getElementById('unsupported-browser').style.display = "none";
     return false;
 };
@@ -66,13 +77,14 @@ var addStats = function () {
 var debug = true;
 $(function () {
     if (Modernizr.canvas && Modernizr.websockets) {
-        initApp();
+        gameInit();
     } else {
         $('#unsupported-browser').css('display', 'block');
         $('#force-init-button').click(forceInit());
     }
 
     if (debug) {
+        //帧数调试
         addStats();
     }
 
