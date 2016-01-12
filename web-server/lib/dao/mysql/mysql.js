@@ -33,7 +33,9 @@ NND.query = function (sql, args, callback) {
         }
         client.query(sql, args, function (err, res) {
             _pool.release(client);
-            callback.apply(null, [err, res]);
+            if(!!callback){
+                callback.apply(null, [err, res]);
+            }
         });
     });
 };
