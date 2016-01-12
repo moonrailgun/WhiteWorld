@@ -72,7 +72,7 @@ userDao.getPlayerAllInfo = function(playerId, callback){
                 callback(err,player);
             });
         },
-        function(callback){
+        function(callback) {
             bagDao.getBagByPlayerId(playerId, function(err, bag){
                 if(!!err || !bag){
                     logger.error('获取背包数据失败' + err.stack);
@@ -87,7 +87,8 @@ userDao.getPlayerAllInfo = function(playerId, callback){
         if(!!err){
             utils.invokeCallback(callback, err);
         }else{
-            utils.invokeCallback(callback, null, player);
+            callback(null, player);
+            //utils.invokeCallback(callback, null, player);
         }
     });
 };

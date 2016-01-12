@@ -14,9 +14,6 @@ var Player = function (opts) {
     this.userId = opts.userId;
     this.playerId = opts.playerId;
     this.playerName = opts.playerName;
-    this.position = opts.lastPos != '' ? JSON.parse(opts.lastPos) : {x: 0, y: 0};
-    this.x = this.position.x;
-    this.y = this.position.y;
     this.type = EntityType.PLAYER;
     this.speed = 240;
     this.target = null;
@@ -27,15 +24,18 @@ util.inherits(Player, Entity);
 module.exports = Player;
 
 Player.prototype.toJSON = function () {
+    console.log(this);
     return {
-        id: this.id,
+        userId: this.userId,
+        playerId: this.playerId,
         entityId: this.entityId,
-        name: this.name,
+        playerName: this.playerName,
         kindId: this.kindId,
         type: this.type,
-        x: this.x,
-        y: this.y,
+        x:this.x,
+        y:this.y,
         speed: this.speed,
-        areaId: this.areaId
+        areaId: this.areaId,
+        target:this.target
     }
 };

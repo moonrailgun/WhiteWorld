@@ -24,7 +24,7 @@ app.configure('production|development', 'auth', function () {
 app.configure('production|development', 'area', function () {
     //app.filter(pomelo.filters.serial());
     //app.before(playerFilter());
-
+    /*
     var server = app.curServer;
     if (server.instance) {
         instancePool.init(require('./config/instance.json'));
@@ -33,7 +33,7 @@ app.configure('production|development', 'area', function () {
         //todo
         //scene.init(dataApi.area.findById(server.area));
         //app.areaManager = scene;
-    }
+    }*/
     //areaService.init();
 });
 

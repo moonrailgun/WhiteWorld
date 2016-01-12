@@ -23,8 +23,9 @@ var Client = function(){
             localStorage.setItem('serverInfo', JSON.stringify(info));
             console.log('正在进入场景');
             pomelo.request('area.playerHandler.enterScene',{playerName: player.playerName,playerId: player.playerId},function(data){
+                localStorage.setItem('player',JSON.stringify(data));
+                //应用数据
 
-                console.log(data);
             });
 
             client.applyGameData(player);
