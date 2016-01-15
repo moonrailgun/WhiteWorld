@@ -3,5 +3,11 @@
  */
 
 var SceneManager = function(canvas){
-    
+    var buildings = [];
+    var entities = [];
+
+    var manager = this;
+    manager.addEntity = function(entity){
+        entities.push(entity);
+    };
 };
