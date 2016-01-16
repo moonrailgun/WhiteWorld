@@ -15,16 +15,19 @@ var GameManager = function(_canvas){
         debugInfo = new DebugInfo(mouse);
 
     var init = function(){
-        canvas = _canvas;
-        context = canvas.getContext('2d');
-        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas, false);
+        var $gameScene = $('#game-scene');
+        $gameScene.mousemove(mousemove);
+        $gameScene.mousedown(mousedown);
+        $gameScene.mouseup(mouseup);
 
-        userplayer = new Player();
-        camera = new Camera(canvas, context, userplayer.x, userplayer.y);
-        client = new Client();
-        client.connect();
+        //document.addEventListener('touchstart', touchstart, false);
+        //document.addEventListener('touchend', touchend, false);
+        //document.addEventListener('touchcancel', touchend, false);
+        //document.addEventListener('touchmove', touchmove, false);
 
-        setInterval(loop, 30);//运行程序
+        document.addEventListener('keydown', keydown, false);
+        document.addEventListener('keyup', keyup, false);
     };
     var loop = function(){
         update();
@@ -67,7 +70,7 @@ var GameManager = function(_canvas){
             return;
         }
         if (userplayer && e.which == 1) {
-            userplayer.momentum = userplayer.targetMomentum = userplayer.maxMomentum;
+            userplayer.momentum = userplayer.targetMomentum = userplayer.maxMomentum;//更新动量
         }
     };
     var mouseup = function(e){
@@ -76,6 +79,7 @@ var GameManager = function(_canvas){
         }
     };
 
+    /* 暂时注释移动支持
     var touchstart = function (e) {
         e.preventDefault();
         mouse.clicking = true;
@@ -103,7 +107,7 @@ var GameManager = function(_canvas){
             mouse.x = touch.clientX;
             mouse.y = touch.clientY;
         }
-    };
+    };*/
 
     var keydown = function (e) {
         if (e.keyCode == keys.up) {
@@ -164,26 +168,26 @@ var GameManager = function(_canvas){
     };
 
     (function(){
+        //初始化
         if(!!sceneManager){
             console.log('scene have been init');
             return;
         }
         sceneManager = new SceneManager(canvas);
 
-        window.addEventListener('resize', resizeCanvas, false);
-        var $gameScene = $('#game-scene');
-        $gameScene.mousemove(mousemove);
-        $gameScene.mousedown(mousedown);
-        $gameScene.mouseup(mouseup);
+        canvas = _canvas;
+        context = canvas.getContext('2d');
+        resizeCanvas();
 
-        document.addEventListener('touchstart', touchstart, false);
-        document.addEventListener('touchend', touchend, false);
-        document.addEventListener('touchcancel', touchend, false);
-        document.addEventListener('touchmove', touchmove, false);
+        client = new Client();
+        client.connect(function(player){
+            console.log(player);
+            userplayer = new Player(player);
+            camera = new Camera(canvas, context, userplayer.x, userplayer.y);
 
-        document.addEventListener('keydown', keydown, false);
-        document.addEventListener('keyup', keyup, false);
+            init();//初始化事件绑定
 
-        init();
+            setInterval(loop, 30);//运行程序
+        });
     })()
 };

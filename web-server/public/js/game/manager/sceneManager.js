@@ -10,4 +10,9 @@ var SceneManager = function(canvas){
     manager.addEntity = function(entity){
         entities.push(entity);
     };
+
+    manager.init = function(_entities, _buildings){
+        entities = _entities;
+        buildings = _buildings;
+    }
 };

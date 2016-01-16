@@ -2,16 +2,18 @@
  * Created by Chen on 2015-12-10.
  */
 
-var Player = function () {
+var Player = function (opts) {
     var player = this;
+    Entity.call(this,opts);
 
-    player.uid = -1;//用户唯一标识
-    player.name = '';//名字
-    player.level = '';//等级
+    player.userId = opts.userId || -1;//用户唯一标识
+    player.playerId = opts.playerId || -1;//玩家唯一标识
+    player.playerName = opts.playerName || '';//名字
+    //player.level = opts.level || '';//等级
 
     //位置
-    player.x = Math.random() * 300 - 150;
-    player.y = Math.random() * 300 - 150;
+    player.x = opts.x || Math.random() * 300 - 150;
+    player.y = opts.y || Math.random() * 300 - 150;
 
     //移动
     player.momentum = 0;
@@ -25,30 +27,30 @@ var Player = function () {
     player.messages = [];//信息框
 
     //本机玩家更新
-    player.userUpdate = function(allPlayerList, angleTargetX, angleTargetY){
+    player.userUpdate = function (allPlayerList, angleTargetX, angleTargetY) {
         var prevState = {
             angle: player.angle,
             momentum: player.momentum
         };//上一个状态
 
         var anglediff = ((Math.atan2(angleTargetY - player.y, angleTargetX - player.x)) - player.angle);
-        while(anglediff < -Math.PI) {
+        while (anglediff < -Math.PI) {
             anglediff += Math.PI * 2;
         }
-        while(anglediff > Math.PI) {
+        while (anglediff > Math.PI) {
             anglediff -= Math.PI * 2;
         }
 
         player.angle += anglediff / 5;
 
         // Momentum to targetmomentum
-        if(player.targetMomentum != player.momentum) {
+        if (player.targetMomentum != player.momentum) {
             player.momentum += (player.targetMomentum - player.momentum) / 20;
         }
-        if(player.momentum < 0) {
+        if (player.momentum < 0) {
             player.momentum = 0;
         }
-        if(player.momentum > player.maxMomentum){
+        if (player.momentum > player.maxMomentum) {
             player.momentum = player.maxMomentum;
         }
     };
@@ -57,7 +59,7 @@ var Player = function () {
         player.x += Math.cos(player.angle) * player.momentum;
         player.y += Math.sin(player.angle) * player.momentum;
 
-        if(player.targetX != 0 || player.targetY != 0) {
+        if (player.targetX != 0 || player.targetY != 0) {
             player.x += (player.targetX - player.x) / 20;
             player.y += (player.targetY - player.y) / 20;
         }
@@ -78,6 +80,11 @@ var Player = function () {
         // 清除画笔修改
         context.shadowBlur = 0;
         context.shadowColor = '';
+    };
+
+    player.moveTo = function (targetX, targetY) {
+        player.targetX = targetX;
+        player.targetY = targetY;
     };
 
     //绘制名字

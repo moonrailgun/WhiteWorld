@@ -1,9 +1,7 @@
 /**
  * Created by Chen on 2015-12-10.
  */
-//var app;
 var gameManager;
-var settings = new Settings();
 /*//循环运行
 var runLoop = function () {
     app.update();

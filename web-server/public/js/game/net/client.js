@@ -8,7 +8,7 @@ var Client = function(){
         GATE_HOST: window.location.hostname,
         GATE_PORT: 3014
     };
-    client.connect = function(){
+    client.connect = function(callback){
         var uid = localStorage.getItem('uid');
         var token = localStorage.getItem('token');
         authEntry(uid, token, function (host, port, player, token) {
@@ -25,15 +25,9 @@ var Client = function(){
             pomelo.request('area.playerHandler.enterScene',{playerName: player.playerName,playerId: player.playerId},function(data){
                 localStorage.setItem('player',JSON.stringify(data));
                 //应用数据
-                client.applyGameData(player);
+                callback(data);
             });
         });
-    };
-
-    client.applyGameData = function(player){
-        console.log(player);
-
-        //todo
     };
 
     var authEntry = function (uid, token, callback) {
