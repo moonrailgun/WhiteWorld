@@ -12,7 +12,9 @@ var GameManager = function(_canvas){
         client,
         userplayer = null,
         allPlayerList = [],
-        debugInfo = new DebugInfo(mouse);
+        deltaTime = 0,
+        prevTime = Date.now(),
+        debugInfo = new DebugInfo(this);
 
     var init = function(){
         window.addEventListener('resize', resizeCanvas, false);
@@ -35,6 +37,8 @@ var GameManager = function(_canvas){
     };
 
     var update = function(){
+        updateDeltaTime();
+
         if (keyNav.x != 0 || keyNav.y != 0) {//键盘控制
             userplayer.userUpdate(allPlayerList, userplayer.x + keyNav.x, userplayer.y + keyNav.y);
         } else {//鼠标|触摸控制
@@ -158,6 +162,16 @@ var GameManager = function(_canvas){
             x: (mouse.x + (camera.x * camera.zoom - canvas.width / 2)) / camera.zoom,
             y: (mouse.y + (camera.y * camera.zoom - canvas.height / 2)) / camera.zoom
         }
+    };
+    var updateDeltaTime = function(){
+        deltaTime = Date.now() - prevTime;
+        prevTime = Date.now();
+    };
+    this.getMouse = function(){
+        return mouse;
+    };
+    this.getDeltaTime = function(){
+        return deltaTime;
     };
 
     var $userPosition = $('#position');
