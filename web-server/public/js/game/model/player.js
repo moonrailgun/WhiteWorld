@@ -11,6 +11,8 @@ var Player = function (opts) {
     player.playerName = opts.playerName || '';//名字
     //player.level = opts.level || '';//等级
 
+    player.isHover = false;
+
     //位置
     player.x = opts.x || Math.random() * 300 - 150;
     player.y = opts.y || Math.random() * 300 - 150;
@@ -80,6 +82,8 @@ var Player = function (opts) {
         // 清除画笔修改
         context.shadowBlur = 0;
         context.shadowColor = '';
+
+        drawName(context);
     };
 
     player.moveTo = function (targetX, targetY) {
@@ -89,18 +93,23 @@ var Player = function (opts) {
 
     //绘制名字
     var drawName = function (context) {
-        context.fillStyle = 'rgba(226,219,226,' + opacity + ')';
-        context.font = 7 + "px 'proxima-nova-1','proxima-nova-2', arial, sans-serif";
+        var opacity = 0.5;
+        if(player.isHover){
+            opacity = 1;
+        }
+
+        context.fillStyle = 'rgba(66,66,66,' + 0.8 + ')';
+        context.font = 1 + "px 'proxima-nova-1','proxima-nova-2', arial, sans-serif";
         context.textBaseline = 'hanging';
-        var width = context.measureText(player.name).width;
-        context.fillText(player.name, player.x - width / 2, player.y + 8);
+        var width = context.measureText(player.playerName).width;
+        context.fillText(player.playerName, player.x - width / 2, player.y + 10);
     };
 
     //绘制信息
     var drawMessages = function (context) {
         player.messages.reverse();
-        for (var i = 0, len = tadpole.messages.length; i < len; i++) {
-            player.messages[i].draw(context, tadpole.x + 10, tadpole.y + 5, i);
+        for (var i = 0, len = player.messages.length; i < len; i++) {
+            player.messages[i].draw(context, player.x + 10, player.y + 5, i);
         }
         player.messages.reverse();
     };

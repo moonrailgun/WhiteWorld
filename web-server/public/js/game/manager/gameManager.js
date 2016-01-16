@@ -148,6 +148,7 @@ var GameManager = function(_canvas){
         }
     };
 
+    //重设画布大小
     var resizeCanvas = function () {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;

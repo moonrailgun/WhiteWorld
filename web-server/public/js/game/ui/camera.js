@@ -10,8 +10,8 @@ var Camera = function (aCanvas, aContext, x, y) {
     camera.x = x;
     camera.y = y;
 
-    camera.minZoom = 1.3;
-    camera.maxZoom = 1.8;
+    camera.minZoom = 0.8;
+    camera.maxZoom = 1.0;
     camera.zoom = this.minZoom;
 
     this.update = function(userplayer) {
