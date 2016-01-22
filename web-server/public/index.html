@@ -53,12 +53,12 @@
                 <label for="password" class="col-lg-2 control-label"></label>
 
                 <div class="col-lg-8">
-                    <a href="#" style="font-weight:800">忘记密码了</a>
+                    <a href="#" style="font-weight:800" onclick="forgetPassword();">忘记密码了</a>
                 </div>
             </div>
             <div class="form-group clearfix">
                 <div class="col-lg-3 col-lg-offset-2">
-                    <input type="button" class="btn btn-lg btn-block" onclick="return false;" value="注册">
+                    <input type="button" class="btn btn-lg btn-block" onclick="register();" value="注册">
                 </div>
                 <div class="col-lg-5 col-lg-offset-0">
                     <input type="button" class="btn btn-lg btn-block" onclick="login();" value="登录">
@@ -144,6 +144,14 @@
             port: '3014'
         });
         login.login(username,password);
+    }
+
+    function register(){
+        alert('暂时不开放注册，请期待一下');
+    }
+
+    function forgetPassword(){
+        alert('暂时不提供密码找回服务');
     }
 </script>
 </html>
