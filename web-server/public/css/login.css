@@ -17,16 +17,16 @@
 #selectModel .btn-block+.btn-block,#selectServer .btn-block+.btn-block{
     margin-top: 30px;
 }
-#login{
+#login,#register{
     color: #ffffff;
 }
-#login label{
+#login label,#register label{
     text-align: right;
 }
-#login input[type=button]{
+#login input[type=button],#register input[type=button]{
     background-color: rgba(0,0,0,0);
     border: solid 1px #b2b2b2;
 }
-#login .btn-block{
+#login .btn-block,#register .btn-block{
     margin-bottom: 10px;
 }
