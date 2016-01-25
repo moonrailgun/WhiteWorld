@@ -21,12 +21,14 @@ var Login = function (serverOption) {
 
         $.post(httpHost + 'login', {username: username, password: pwd}, function (data) {
             if (data.code === 501) {
-                alert('用户名或密码不正确');
+                tips.add(new Tip("用户名或密码不正确"));
+                //alert('用户名或密码不正确');
                 loading = false;
                 return;
             }
             if (data.code !== 200) {
-                alert('该用户不存在');
+                tips.add(new Tip("该用户不存在"));
+                //alert('该用户不存在');
                 loading = false;
                 return;
             }
