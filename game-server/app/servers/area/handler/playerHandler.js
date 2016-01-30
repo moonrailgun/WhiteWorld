@@ -32,3 +32,10 @@ handler.enterScene = function (msg, session, next) {
         next(null, player);
     });
 };
+
+handler.move = function(msg, session, next){
+    var currentPos = msg.currentPos;
+    var playerId = session.get('playerId');
+
+    //todo
+};

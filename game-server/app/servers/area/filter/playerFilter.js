@@ -10,8 +10,12 @@ module.exports = function() {
 };
 
 var Filter = function() {
+
 };
 
 Filter.prototype.before = function(msg, session, next){
     //var area = pomelo.app.areaManager
+    logger.debug('玩家信息预处理:'+ msg +'session:' + session);
+
+    next();
 };
