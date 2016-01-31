@@ -1,5 +1,5 @@
 [
     ["区域id","名称","类型","区域名","等级","宽","高","数据地址"],
     ["id","name","type","areaName","level","width","height","path"],
-    ["1","whiteworld",1,"白色大世界",0,100000,100000,""]
+    ["1","whiteworld",1,"白色大世界",0,100000,100000,"/config/map/whiteworld.json"]
 ]

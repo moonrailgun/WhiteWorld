@@ -29,13 +29,17 @@ app.configure('production|development', 'area', function () {
 
     var server = app.curServer;
     logger.debug('------------------------server----------------------------------');
-    logger.debug(server);
+    logger.debug(JSON.stringify(server));
     logger.debug('------------------------server----------------------------------');
-    if(!!server.instance){
+    if(!!server.instance) {
         instancePool.init(require('./config/instance.json'));
         app.areaManager = instancePool;
     }else{
-        scene.init(dataApi.area.findById(server.area));
+        var data = dataApi.area.findById(server.area);//根据配置文件中的area的标号获取相应数据
+        logger.debug('------------------------data----------------------------------');
+        logger.debug(JSON.stringify(data));
+        logger.debug('------------------------data----------------------------------');
+        scene.init(data);
         app.areaManager = scene;
     }
 

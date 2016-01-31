@@ -1,0 +1,67 @@
+{
+    "height": 1,
+    "layers": [
+        {
+            "width": 1,
+            "height": 1,
+            "name": "tileSet",
+            "opacity": 1,
+            "objects": [
+                {
+                    "height": 0,
+                    "name": "",
+                    "polygon": [
+                        {
+                            "x": 0,
+                            "y": 0
+                        },
+                        {
+                            "x": 1,
+                            "y": 0
+                        },
+                        {
+                            "x": 1,
+                            "y": 1
+                        },
+                        {
+                            "x": 0,
+                            "y": 1
+                        }
+                    ],
+                    "properties": {
+                    },
+                    "type": "",
+                    "width": 0,
+                    "x": 5,
+                    "y": 5
+                }
+            ],
+            "type": "objectgroup",
+            "visible": true,
+            "x": 0,
+            "y": 0
+        }
+    ],
+    "orientation": "orthogonal",
+    "properties": {
+    },
+    "tileheight": 4800,
+    "tilesets": [
+        {
+            "firstgid": 1,
+            "image": "ice.jpg",
+            "imageheight": 4800,
+            "imagewidth": 6500,
+            "margin": 0,
+            "name": "ice",
+            "properties": {
+            },
+            "spacing": 0,
+            "tileheight": 4800,
+            "tilewidth": 6500
+        }
+    ],
+    "tilewidth": 6500,
+    "version": 1,
+    "width": 1
+}

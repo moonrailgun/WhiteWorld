@@ -59,7 +59,8 @@ pro.addPath = function (x1, y1, x2, y2, path) {
     }
 };
 
-
 var comparator = function (a, b) {
     return a.time < b.time;
 };
+
+module.exports = PathCache;
