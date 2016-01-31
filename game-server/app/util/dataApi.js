@@ -73,5 +73,5 @@ Data.prototype.all = function() {
 };
 
 module.exports = {
-    area: new Data(area),
+    area: new Data(area)
 };

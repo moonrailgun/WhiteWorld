@@ -3,6 +3,8 @@ var sync = require('pomelo-sync-plugin');
 var instancePool = require('./app/domain/area/instancePool');
 var playerFilter = require('./app/servers/area/filter/playerFilter');
 var dataApi = require('./app/util/dataApi');
+var scene = require('./app/domain/area/scene');
+var logger = require('pomelo-logger').getLogger(__filename);
 
 /**
  * Init app for client.
@@ -26,13 +28,15 @@ app.configure('production|development', 'area', function () {
     app.before(playerFilter());
 
     var server = app.curServer;
+    logger.debug('------------------------server----------------------------------');
+    logger.debug(server);
+    logger.debug('------------------------server----------------------------------');
     if(!!server.instance){
         instancePool.init(require('./config/instance.json'));
         app.areaManager = instancePool;
     }else{
-        //todo
-        //scene.init(dataApi.area.findById(server.area));
-        //app.areaManager = scene;
+        scene.init(dataApi.area.findById(server.area));
+        app.areaManager = scene;
     }
 
     //areaService.init();

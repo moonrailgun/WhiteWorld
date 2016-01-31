@@ -35,7 +35,12 @@ handler.enterScene = function (msg, session, next) {
 
 handler.move = function(msg, session, next){
     var currentPos = msg.currentPos;
+    var entityId = msg.entityId;
     var playerId = session.get('playerId');
+    var player = area.getEntity(entityId);
+
 
     //todo
+
+    next(null, {});
 };
