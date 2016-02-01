@@ -1,5 +1,6 @@
 /**
  * Created by Chen on 2015-12-30.
+ * 弃用
  */
 
 //var PriorityQueue = require('pomelo-collection').priorityQueue;
@@ -63,4 +64,4 @@ var comparator = function (a, b) {
     return a.time < b.time;
 };
 
-module.exports = PathCache;
+//module.exports = PathCache;

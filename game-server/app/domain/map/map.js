@@ -3,7 +3,7 @@
  */
 
 //var buildFinder = require('pomelo-pathfinding').buildFinder;
-var PathCache = require('../../util/pathCache');
+//var PathCache = require('../../util/pathCache');
 var logger = require('pomelo-logger').getLogger(__filename);
 
 
@@ -32,7 +32,7 @@ Map.prototype.init = function(opts){
         this.rectW = Math.ceil(this.width / this.tileW);
         this.rectH = Math.ceil(this.height / this.tileH);
 
-        this.pathCache = new PathCache({limit: 1000});
+        //this.pathCache = new PathCache({limit: 1000});
         //this.pfinder = buildFinder(this);
     } else {
         logger.error('读取地图失败');
@@ -49,9 +49,6 @@ Map.prototype.configMap = function(map){
             this.map[layer.name] = configObjectGroup(layer.objects);
         }
     }
-    logger.debug('------------------------map----------------------------------');
-    logger.debug(JSON.stringify(this.map));
-    logger.debug('------------------------map----------------------------------');
 };
 
 function configProps(obj){

@@ -12,8 +12,8 @@ var area = null;
 exp.init = function (opts) {
     if (!area) {
         opts.weightMap = true;
-        opts.map = new Map(opts);
-        area = new Area(opts);
+        opts.map = new Map(opts);//新建区域地图数据实例
+        area = new Area(opts);//新建区域管理对象实例
     }
 };
 

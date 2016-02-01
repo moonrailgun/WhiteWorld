@@ -19,6 +19,8 @@ var channel = null;
 var mobCounts = 0;
 
 var Instance = function (opts) {
+    this.serverId = pomelo.app.getServerId();
+
     this.areaId = opts.id;
     this.type = opts.type;
     this.map = opts.map;
@@ -38,7 +40,7 @@ var Instance = function (opts) {
         interval : 100
     });
 
-    this.start();
+    this.start();//启动地图
 };
 
 module.exports = Instance;
@@ -51,6 +53,7 @@ Instance.prototype.close = function(){
     this.timer.close();
 };
 
+//获取区域频道
 Instance.prototype.getChannel = function(){
     if(!this.channel){
         var channelName = channelUtil.getAreaChannelName(this.areaId);
@@ -59,7 +62,6 @@ Instance.prototype.getChannel = function(){
     return this.channel;
 };
 
-//todo
 Instance.prototype.addEntity = function(entity){
     var entities = this.entities;
     var players = this.players;
