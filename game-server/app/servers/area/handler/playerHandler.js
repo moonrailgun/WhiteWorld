@@ -39,7 +39,6 @@ handler.move = function(msg, session, next){
     var playerId = session.get('playerId');
     var player = area.getEntity(entityId);
 
-
     //todo
 
     next(null, {});
