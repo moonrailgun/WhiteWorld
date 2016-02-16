@@ -1,6 +1,7 @@
 logs/
 .idea/
 node_modules/
+web-server/public/js/lib/WhiteWorld - *.js
 
 #################
 ## Eclipse
