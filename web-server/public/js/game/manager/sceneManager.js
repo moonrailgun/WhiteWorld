@@ -2,9 +2,11 @@
  * Created by Chen on 2015-12-14.
  */
 
-var SceneManager = function(canvas){
+var SceneManager = function(_canvas,_context){
     var buildings = [];
     var entities = [];
+    var canvas = _canvas;
+    var context = _context;
 
     var manager = this;
     manager.addEntity = function(entity){
@@ -14,5 +16,5 @@ var SceneManager = function(canvas){
     manager.init = function(_entities, _buildings){
         entities = _entities;
         buildings = _buildings;
-    }
+    };
 };

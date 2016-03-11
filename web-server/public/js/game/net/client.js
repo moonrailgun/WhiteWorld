@@ -2,13 +2,13 @@
  * Created by Chen on 2015-12-13.
  */
 
-var Client = function(){
+var Client = function () {
     var client = this;
     var config = {
         GATE_HOST: window.location.hostname,
         GATE_PORT: 3014
     };
-    client.connect = function(callback){
+    client.connect = function (callback) {
         var uid = localStorage.getItem('uid');
         var token = localStorage.getItem('token');
         authEntry(uid, token, function (host, port, player, token) {
@@ -22,10 +22,12 @@ var Client = function(){
             };
             localStorage.setItem('serverInfo', JSON.stringify(info));
             console.log('正在进入场景');
-            pomelo.request('area.playerHandler.enterScene',{playerName: player.playerName,playerId: player.playerId},function(data){
-                localStorage.setItem('player',JSON.stringify(data));
+            pomelo.request('area.playerHandler.enterScene', {playerName: player.playerName, playerId: player.playerId}, function (data) {
+                var player = data.player;
+                var map = data.map;
+                localStorage.setItem('player', JSON.stringify(player));
                 //应用数据
-                callback(data);
+                callback(player, map);
             });
         });
     };

@@ -2,7 +2,7 @@
  * Created by Chen on 2016-01-12.
  */
 
-var GameManager = function(_canvas){
+var GameManager = function (_canvas) {
     var sceneManager,
         canvas,
         context,
@@ -16,7 +16,8 @@ var GameManager = function(_canvas){
         prevTime = Date.now(),
         debugInfo = new DebugInfo(this);
 
-    var init = function(){
+    //初始化
+    var init = function () {
         window.addEventListener('resize', resizeCanvas, false);
         var $gameScene = $('#game-scene');
         $gameScene.mousemove(mousemove);
@@ -31,13 +32,15 @@ var GameManager = function(_canvas){
         document.addEventListener('keydown', keydown, false);
         document.addEventListener('keyup', keyup, false);
     };
-    var loop = function(){
+
+    //循环
+    var loop = function () {
         update();
         draw();
     };
 
-    var update = function(){
-        updateDeltaTime();
+    var update = function () {
+        updateDeltaTime();//更新间隔程序
 
         if (keyNav.x != 0 || keyNav.y != 0) {//键盘控制
             userplayer.userUpdate(allPlayerList, userplayer.x + keyNav.x, userplayer.y + keyNav.y);
@@ -53,21 +56,21 @@ var GameManager = function(_canvas){
 
         updateUserPosition();//更新坐标显示
 
-        if(debug){
+        if (debug) {
             debugInfo.update();
         }
     };
-    var draw = function(){
+    var draw = function () {
         camera.setupContext();
         userplayer.draw(context);
         camera.startUILayer();
     };
 
-    var mousemove = function(e){
+    var mousemove = function (e) {
         mouse.x = e.clientX;
         mouse.y = e.clientY;
     };
-    var mousedown = function(e){
+    var mousedown = function (e) {
         mouse.clicking = true;
 
         if (mouse.player && mouse.player.hover && mouse.player.onclick(e)) {
@@ -77,41 +80,41 @@ var GameManager = function(_canvas){
             userplayer.momentum = userplayer.targetMomentum = userplayer.maxMomentum;//更新动量
         }
     };
-    var mouseup = function(e){
+    var mouseup = function (e) {
         if (userplayer && e.which == 1) {
             userplayer.targetMomentum = 0;
         }
     };
 
     /* 暂时注释移动支持
-    var touchstart = function (e) {
-        e.preventDefault();
-        mouse.clicking = true;
+     var touchstart = function (e) {
+     e.preventDefault();
+     mouse.clicking = true;
 
-        if (!!userplayer) {
-            userplayer.momentum = userplayer.targetMomentum = userplayer.maxMomentum;
-        }
+     if (!!userplayer) {
+     userplayer.momentum = userplayer.targetMomentum = userplayer.maxMomentum;
+     }
 
-        var touch = e.changedTouches.item(0);
-        if (touch) {
-            mouse.x = touch.clientX;
-            mouse.y = touch.clientY;
-        }
-    };
-    var touchend = function (e) {
-        if (!!userplayer) {
-            userplayer.targetMomentum = 0;
-        }
-    };
-    var touchmove = function (e) {
-        e.preventDefault();
+     var touch = e.changedTouches.item(0);
+     if (touch) {
+     mouse.x = touch.clientX;
+     mouse.y = touch.clientY;
+     }
+     };
+     var touchend = function (e) {
+     if (!!userplayer) {
+     userplayer.targetMomentum = 0;
+     }
+     };
+     var touchmove = function (e) {
+     e.preventDefault();
 
-        var touch = e.changedTouches.item(0);
-        if (touch) {
-            mouse.x = touch.clientX;
-            mouse.y = touch.clientY;
-        }
-    };*/
+     var touch = e.changedTouches.item(0);
+     if (touch) {
+     mouse.x = touch.clientX;
+     mouse.y = touch.clientY;
+     }
+     };*/
 
     var keydown = function (e) {
         if (e.keyCode == keys.up) {
@@ -163,14 +166,14 @@ var GameManager = function(_canvas){
             y: (mouse.y + (camera.y * camera.zoom - canvas.height / 2)) / camera.zoom
         }
     };
-    var updateDeltaTime = function(){
+    var updateDeltaTime = function () {
         deltaTime = Date.now() - prevTime;
         prevTime = Date.now();
     };
-    this.getMouse = function(){
+    this.getMouse = function () {
         return mouse;
     };
-    this.getDeltaTime = function(){
+    this.getDeltaTime = function () {
         return deltaTime;
     };
 
@@ -182,27 +185,32 @@ var GameManager = function(_canvas){
         $userPosition.text('(' + x + ',' + y + ')');
     };
 
-    (function(){
+    //入口
+    (function () {
         //初始化
-        if(!!sceneManager){
+        if (!!sceneManager) {
             console.log('scene have been init');
             return;
         }
-        sceneManager = new SceneManager(canvas);
-
         canvas = _canvas;
         context = canvas.getContext('2d');
-        resizeCanvas();
+
+        sceneManager = new SceneManager(canvas, context);//创建场景管理器
+
+        resizeCanvas();//修改程序大小
 
         client = new Client();
-        client.connect(function(player){
+        client.connect(function (player, mapData) {
             console.log(player);
+            console.log(mapData);
             userplayer = new Player(player);
             camera = new Camera(canvas, context, userplayer.x, userplayer.y);
 
             init();//初始化事件绑定
-
             setInterval(loop, 30);//运行程序
+
+            //获取场景数据
+
         });
     })()
 };

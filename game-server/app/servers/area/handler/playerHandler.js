@@ -29,7 +29,12 @@ handler.enterScene = function (msg, session, next) {
         //pomelo.app.rpc.chat.chatRemote.add(session, player.)
         //todo
 
-        next(null, player);
+        var data = {
+            player: player,
+            map: null
+        };
+
+        next(null, data);
     });
 };
 

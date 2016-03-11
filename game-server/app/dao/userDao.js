@@ -61,7 +61,7 @@ userDao.getPlayer = function(playerId, callback) {
         }
     });
 };
-//根据角色ID获取该玩家所有数据
+//根据角色ID获取玩家数据对象
 userDao.getPlayerAllInfo = function(playerId, callback){
     async.parallel([
         function(callback){
