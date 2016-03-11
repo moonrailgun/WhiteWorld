@@ -27,7 +27,7 @@ handler.enterScene = function (msg, session, next) {
         player.serverId = session.frontendId;//前端连接服务器ID
         //console.log(player);
         //pomelo.app.rpc.chat.chatRemote.add(session, player.)
-        //todo
+        //todo 地图数据的获取
 
         var data = {
             player: player,
