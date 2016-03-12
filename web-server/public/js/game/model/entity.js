@@ -14,6 +14,10 @@ var Entity = function(opts){
     this.map = opts.map || null;
 };
 
+Entity.prototype.draw = function () {
+    //todo
+};
+
 Entity.prototype.setPosition = function(x,y){
     this.x = x;
     this.y = y;

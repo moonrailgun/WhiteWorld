@@ -196,8 +196,11 @@ var GameManager = function (_canvas) {
         context = canvas.getContext('2d');
 
         sceneManager = new SceneManager(canvas, context);//创建场景管理器
+        sceneManager.init({
 
-        resizeCanvas();//修改程序大小
+        });//测试用
+
+        resizeCanvas();//修改界面大小
 
         client = new Client();
         client.connect(function (player, mapData) {
@@ -209,8 +212,7 @@ var GameManager = function (_canvas) {
             init();//初始化事件绑定
             setInterval(loop, 30);//运行程序
 
-            //获取场景数据
-
+            //todo 获取场景数据
         });
     })()
 };
